@@ -42,3 +42,6 @@ class BaseModel(Base):
             session.delete(obj)
             session.commit()
             return True
+        
+    def getcode(self):
+        return str(self.code)
