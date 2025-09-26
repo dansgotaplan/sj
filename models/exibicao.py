@@ -15,4 +15,4 @@ class Exibicao(BaseModel):
     longitude = Column(DECIMAL(8,5), nullable= False)
 
     polo = relationship('Polo', back_populates='exibicoes')
-    atracoes = relationship('Atracao', back_populates='exibicao')
+    atracoes = relationship('Atracao', secondary='atracaoexibicao', back_populates='exibicoes')
