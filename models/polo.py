@@ -17,7 +17,7 @@ class Polo(BaseModel):
     ismultilocal = Column(Boolean, nullable=False, default=False)
     urlimagem = Column(String(255), nullable=False)
 
-    exibicoes = relationship('exibicao', back_populates='polo')
+    exibicoes = relationship('Exibicao', back_populates='polo')
 
     __table_args__ = (
         CheckConstraint('(ismultilocal = 0 AND endereco IS NOT NULL AND latitude IS NOT NULL AND longitude IS NOT NULL) OR (ismultilocal = 1 AND endereco IS NULL AND latitude IS NULL AND longitude IS NULL)', name = 'check_multilocal'),

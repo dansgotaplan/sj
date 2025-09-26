@@ -3,3 +3,7 @@
 3. Flask 3.1.2
 4. Flask-Login 0.6.3
 5. SQLAlchemy 2.0.43
+6. PyMySQL 1.1.2
+
+# Command
+pip install cryptography, dotenv, flask, flask-login, sqlalchemy, pymysql

@@ -8,7 +8,6 @@ class Atracao(BaseModel):
     code = Column(Integer, primary_key=True, autoincrement=True)
     handle = Column(String(255), unique=True, nullable=False)
     ordem = Column(Integer)
-    fk = Column(Integer, ForeignKey('exibicao.code'), nullable=False)
     nome = Column(String(255), nullable=False)
     descricao = Column(Text, nullable=False)
     principal = Column(Boolean, nullable=False)
