@@ -7,10 +7,17 @@ Base = declarative_base()
 class BaseModel(Base):
     __abstract__ = True
 
+    def to_dict(self):
+        return {
+            column.name: getattr(self, column.name)
+            for column in self.__table__.columns
+        }
+
     @classmethod
     def getall(cls, skip: int = 0, limit: int = 100):
         with getdb() as session:
-            return session.query(cls).offset(skip).limit(limit).all()
+            results = session.query(cls).offset(skip).limit(limit).all()
+            return [obj.to_dict() for obj in results]
     
     @classmethod
     def getbycode(cls, code: int):

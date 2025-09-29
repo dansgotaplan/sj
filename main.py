@@ -1,9 +1,8 @@
 from models import create_tables, Atracao, AtracaoExibicao, AtracaoTags, Equipe, Evento, Exibicao, Locais, LocaisTags, Pessoa, Polo, Tag, Usuario
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify, make_response
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
-
-create_tables()
+#create_tables
 
 app = Flask(__name__, template_folder='view')
 app.secret_key = 'xavesecreta'
