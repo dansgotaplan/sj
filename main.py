@@ -5,7 +5,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 
 create_tables()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='view')
 app.secret_key = 'xavesecreta'
 
 lm = LoginManager()
