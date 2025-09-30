@@ -1,0 +1,90 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #212121;
+    display: flex;
+    
+}
+header {
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+aside {
+    width: 230px;
+    background-color: #08095b;
+    height: 100vh;
+    position: absolute;
+    color: white;
+    padding-top: 35px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    z-index: 1;
+    
+}
+#logo {
+    width: 200px;
+    height: auto;
+}
+#logo:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+aside ul {
+    list-style-type: none;
+    padding: 0;
+    
+}
+aside ul li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+aside ul li:hover {
+    background-color: #1313a8;
+    text-decoration: underline;
+
+}
+a {
+  color:white;
+  text-decoration: none;
+}
+#bandeirinhas {
+    width: 100%;
+    position: fixed;
+    margin-left: 230px;
+
+
+}
+
+    
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    margin-left: 230px;
+}
+
+p {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+}
+input {
+    padding: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 100px;
+    width: 40%;
+    margin-top: 20px;
+    background-color: #303030;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+

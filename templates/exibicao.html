@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/exibicao.css">
+</head>
+<body>
+     <div id="admin-container">
+        <aside>
+          <a href="home.html">
+           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+        </a>
+          <ul>
+          <li data-section="atracao"><a href="atracao.html">Atração</a></li>
+          <li data-section="equipe"><a href="equipe.html">Equipe</a></li>
+          <li data-section="eventos"><a href="eventos.html">Eventos</a></li>
+          <li data-section="exibicao"><a href="exibicao.html">Exibição</a></li>
+          <li data-section="locais"><a href="locais.html">Locais</a></li>
+          <li data-section="Polos"><a href="polo.html">Polos</a></li>
+          <li data-section="Tags"><a href="tag.html">Tags</a></li>
+          </ul>
+        </aside>
+        <main>
+          <div id="gerenciador-atracoes">
+            <div id="topo">
+              <h1>Exibições:</h1>
+              
+              <button id="adicionar">Adicionar exibição</button>
+            </div>
+             <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="fechar">&times;</span>
+                    <form id="atracaoForm">
+                      <div id="inputs-container">
+
+                        <input type="number" id="ordem" placeholder="Ordem" required><br><br>
+                        <input type="date" id="dia" placeholder="Dia da exibição" required><br><br>
+                        <input type="time" id="horario" placeholder="Função do integrante"></input><br><br>
+                        <input type="text" id="endereco" placeholder="Endereço"><br><br>
+                        <input type="number" id="latitude" placeholder="Latitude"><br><br>
+                        <input type="number" id="longitude" placeholder="Longitute"><br><br>
+                      </div>
+
+                        <div class="buttons">
+                            <button type="button" id="cancelar">Cancelar</button>
+                            <button type="submit" id="salvar">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </main>
+     </div>
+     <script src="../static/scripts/exibicao.js"></script>
+</body>
+</html>
