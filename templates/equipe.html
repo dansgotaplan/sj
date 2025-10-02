@@ -3,45 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Equipe</title>
     <link rel="stylesheet" href="../static/css/equipe.css">
 </head>
 <body>
-     <div id="admin-container">
-        <aside>
-          <a href="home.html">
-           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+<div id="admin-container">
+    <aside>
+        <a href="home.html">
+            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
-          <ul>
-          <li data-section="atracao"><a href="atracao.html">Atração</a></li>
-          <li data-section="equipe"><a href="equipe.html">Equipe</a></li>
-          <li data-section="eventos"><a href="eventos.html">Eventos</a></li>
-          <li data-section="exibicao"><a href="exibicao.html">Exibição</a></li>
-          <li data-section="locais"><a href="locais.html">Locais</a></li>
-          <li data-section="Polos"><a href="polo.html">Polos</a></li>
-          <li data-section="Tags"><a href="tag.html">Tags</a></li>
-          </ul>
-        </aside>
-        <main>
-          <div id="gerenciador-atracoes">
+        <ul>
+            <li data-section="atracao"><a href="atracao.html">Atração</a></li>
+            <li data-section="equipe"><a href="equipe.html">Equipe</a></li>
+            <li data-section="eventos"><a href="eventos.html">Eventos</a></li>
+            <li data-section="exibicao"><a href="exibicao.html">Exibição</a></li>
+            <li data-section="locais"><a href="locais.html">Locais</a></li>
+            <li data-section="Polos"><a href="polo.html">Polos</a></li>
+            <li data-section="Tags"><a href="tag.html">Tags</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <div id="gerenciador-equipe">
             <div id="topo">
-              <h1>Equipe:</h1>
-              
-              <button id="adicionar">Adicionar equipe</button>
+                <h1>Equipe:</h1>
+                <button id="adicionar">Adicionar integrante</button>
             </div>
-             <div id="modal" class="modal">
+
+            <!-- Lista de integrantes -->
+            <ul id="lista-equipe">
+                {% for integrante in equipes %}
+                    <li>
+                        <strong>{{ integrante.nome }}</strong> (Turma: {{ integrante.turma }})<br>
+                        E-mail: {{ integrante.email }}<br>
+                        Função: {{ integrante.funcao }}<br>
+                        Ano: {{ integrante.ano }}<br>
+                        <img src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Modal de Adição -->
+            <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <form id="atracaoForm">
-                      <div id="inputs-container">
-
-                        <input type="text" id="nome" placeholder="Nome" required><br><br>
-                        <input type="text" id="turma" placeholder="Turma do integrante" required><br><br>
-                        <input type="text" id="email" placeholder="E-mail do integrante" required><br><br>
-                        <input type="text" id="funcao" placeholder="Função do integrante"></input><br><br>
-                        <input type="number" id="ano" placeholder="Ano em que o integrante participou"><br><br>
-                        <input type="url" id="imagem" placeholder="URL da Imagem"><br><br>
-                      </div>
+                    <form id="equipeForm" method="POST" action="/equipe">
+                        <div id="inputs-container">
+                            <input type="text" name="nome" placeholder="Nome" required><br><br>
+                            <input type="text" name="turma" placeholder="Turma do integrante" required><br><br>
+                            <input type="text" name="email" placeholder="E-mail do integrante" required><br><br>
+                            <input type="text" name="funcao" placeholder="Função do integrante"><br><br>
+                            <input type="number" name="ano" placeholder="Ano em que o integrante participou"><br><br>
+                            <input type="url" name="urlimagem" placeholder="URL da Imagem"><br><br>
+                        </div>
 
                         <div class="buttons">
                             <button type="button" id="cancelar">Cancelar</button>
@@ -51,8 +65,9 @@
                 </div>
             </div>
         </div>
-        </main>
-     </div>
-     <script src="../static/scripts/equipe.js"></script>
+    </main>
+</div>
+
+<script src="../static/scripts/equipe.js"></script>
 </body>
 </html>

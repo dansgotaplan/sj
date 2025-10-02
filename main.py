@@ -4,7 +4,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 
 #create_tables
 
-app = Flask(__name__, template_folder='view')
+app = Flask(__name__, template_folder='templates')
 app.secret_key = 'xavesecreta'
 
 lm = LoginManager()
@@ -19,7 +19,7 @@ def index():
     if current_user.is_authenticated:
         return render_template('homeauth.html')
     else:
-        return render_template('homenotauth.html')
+        return render_template('homenoauth.html')
     
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -40,23 +40,28 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/atracao', methods = ['GET', 'POST'])
-@login_required
+@app.route('/atracao', methods=['GET', 'POST'])
 def atracao():
     if request.method == 'POST':
-        handle = request.form['handle']
-        ordem = request.form['ordem']
-        fk = request.form['fk']
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        principal = 'principal' in request.form
-        urlimagem = request.form['urlimagem']
-        
-        newatracao = Atracao.create(handle=handle, ordem=ordem, fk=fk, nome=nome, descricao=descricao, principal=principal, urlimagem=urlimagem)
-        
-        return redirect(url_for('atracao'))
+        data = request.get_json()
+        try:
+            newatracao = Atracao.create(
+                handle=data['handle'],
+                ordem=int(data['ordem']),
+                fk=int(data['fk']) if data['fk'] else None,
+                nome=data['nome'],
+                descricao=data['descricao'],
+                principal=bool(data['principal']),
+                urlimagem=data['urlimagem']
+            )
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
     atracoes = Atracao.getall()
     return render_template('atracao.html', atracoes=atracoes)
+
+
 
 @app.route('/equipe', methods = ['GET', 'POST'])
 @login_required
@@ -137,7 +142,7 @@ def locais():
     return render_template('locais.html', locais=locais)
 
 @app.route('/polo', methods = ['GET', 'POST'])
-@login_required
+#@login_required
 def polo():
     if request.method == 'POST':
         handle = request.form['handle']
@@ -148,7 +153,7 @@ def polo():
         endereco = request.form['endereco']
         latitude = request.form['latitude']
         longitude = request.form['longitude']
-        ismultilocal = request.form['ismultilocal']
+        ismultilocal = bool(request.form['ismultilocal'])
         urlimagem = request.form['urlimagem']
 
         newpolo = Polo.create(handle=handle, nome=nome, descricao=descricao, inicio=inicio, fim=fim, endereco=endereco, latitude=latitude, longitude=longitude, ismultilocal=ismultilocal, urlimagem=urlimagem)

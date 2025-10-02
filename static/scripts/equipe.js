@@ -2,7 +2,7 @@ const btnAdicionar = document.getElementById("adicionar");
 const modal = document.getElementById("modal");
 const fechar = document.querySelector(".fechar");
 const cancelar = document.getElementById("cancelar");
-const formEvento = document.getElementById("atracaoForm");
+const formEquipe = document.getElementById("equipeForm");
 
 btnAdicionar.addEventListener("click", () => {
   modal.style.display = "block";
@@ -16,29 +16,26 @@ cancelar.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
-
 window.addEventListener("click", (e) => {
   if (e.target === modal) {
     modal.style.display = "none";
   }
 });
 
-
-formEvento.addEventListener("submit", (e) => {
-  e.preventDefault();
-
+// Se você quiser enviar via Flask normalmente, não use preventDefault
+formEquipe.addEventListener("submit", (e) => {
+  // e.preventDefault(); // comente para enviar normal
 
   const dados = {
-    nome: formEvento.nome.value,
-    turma: formEvento.turma.value,
-    email: formEvento.email.value,
-    funcao: formEvento.funcao.value,
-    ano: formEvento.ano.value,
-    urlImagem: formEvento.imagem.value,
+    nome: formEquipe.nome.value,
+    turma: formEquipe.turma.value,
+    email: formEquipe.email.value,
+    funcao: formEquipe.funcao.value,
+    ano: formEquipe.ano.value,
+    urlimagem: formEquipe.urlimagem.value,
   };
 
-  console.log("Evento cadastrado:", dados);
-
-  formEvento.reset();
-  modal.style.display = "none";
+  console.log("Equipe cadastrada:", dados);
+  // formEquipe.reset();
+  // modal.style.display = "none";
 });

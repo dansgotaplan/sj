@@ -8,5 +8,6 @@ class Equipe(BaseModel):
     nome = Column(String(255), nullable=False)
     turma = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False)
+    funcao = Column(String(255))
     ano = Column(String(50), nullable=False)
     urlimagem = Column(String(255))
