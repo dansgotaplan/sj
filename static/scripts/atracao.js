@@ -2,40 +2,35 @@ const btnAdicionar = document.getElementById("adicionar");
 const modal = document.getElementById("modal");
 const fechar = document.querySelector(".fechar");
 const cancelar = document.getElementById("cancelar");
-const formEvento = document.getElementById("atracaoForm");
+const formAtracao = document.getElementById("atracaoForm");
 
 // Abrir modal
 btnAdicionar.addEventListener("click", () => {
   modal.style.display = "block";
 });
 
-// Fechar modal clicando no X
-fechar.addEventListener("click", () => {
-  modal.style.display = "none";
-});
-
-// Fechar modal clicando em cancelar
-cancelar.addEventListener("click", () => {
-  modal.style.display = "none";
-});
-
-// Fechar modal clicando fora
-window.addEventListener("click", (e) => {
-  if (e.target === modal) modal.style.display = "none";
-});
+// Fechar modal
+fechar.addEventListener("click", () => modal.style.display = "none");
+cancelar.addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", (e) => { if(e.target === modal) modal.style.display = "none"; });
 
 // Envio do formulário
-formEvento.addEventListener("submit", async (e) => {
+formAtracao.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // Pega todas as tags selecionadas (checkboxes)
+  const selectedTags = Array.from(formAtracao.querySelectorAll('input[name="tags"]:checked'))
+                            .map(el => parseInt(el.value));
+
   const dados = {
-    handle: formEvento.handle.value,
-    nome: formEvento.nome.value,
-    ordem: parseInt(formEvento.ordem.value),
-    fk: parseInt(formEvento.fk.value),
-    descricao: formEvento.descricao.value,
-    urlimagem: formEvento.urlimagem.value,
-    principal: formEvento.principal.checked,
+    handle: formAtracao.handle.value,
+    nome: formAtracao.nome.value,
+    ordem: parseInt(formAtracao.ordem.value),
+    fk: formAtracao.fk.value ? parseInt(formAtracao.fk.value) : null,
+    descricao: formAtracao.descricao.value,
+    urlimagem: formAtracao.urlimagem.value,
+    principal: formAtracao.principal.checked,
+    tags: selectedTags
   };
 
   try {
@@ -46,16 +41,14 @@ formEvento.addEventListener("submit", async (e) => {
     });
 
     const json = await response.json();
-    if (json.success) {
-      location.reload();
-    } else {
-      alert("Erro: " + json.error);
-    }
+    if (json.success) location.reload();
+    else alert("Erro: " + json.error);
+
   } catch (error) {
     console.error("Erro na requisição:", error);
     alert("Erro ao cadastrar atração.");
   }
 
-  formEvento.reset();
+  formAtracao.reset();
   modal.style.display = "none";
 });

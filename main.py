@@ -53,31 +53,45 @@ def atracao():
     if request.method == 'POST':
         data = request.get_json()
         try:
-            # Cria a atração
-            Atracao.create(
-                handle=data['handle'],
-                ordem=int(data['ordem']),
-                nome=data['nome'],
-                descricao=data['descricao'],
-                principal=bool(data['principal']),
-                urlimagem=data['urlimagem']
-            )
-
-            # Cria o relacionamento com Exibicao
-            if data.get('fk'):
-                AtracaoExibicao.create(
-                    fkatracao=newatracao.code,
-                    fkexibicao=int(data['fk'])
+            # Abrindo sessão manualmente
+            with getdb() as session:
+                # Cria a atração
+                newatracao = Atracao(
+                    handle=data['handle'],
+                    ordem=int(data['ordem']),
+                    nome=data['nome'],
+                    descricao=data['descricao'],
+                    principal=bool(data['principal']),
+                    urlimagem=data['urlimagem']
                 )
+                session.add(newatracao)
+                session.flush()  # Gera o code sem commitar ainda
+
+                # Relacionamento com Exibicao
+                if data.get('fk'):
+                    session.add(AtracaoExibicao(
+                        fkatracao=newatracao.code,
+                        fkexibicao=int(data['fk'])
+                    ))
+
+                # Relacionamento com Tags
+                if data.get('tags'):
+                    for tag_code in data['tags']:
+                        session.add(AtracaoTags(
+                            fkatracao=newatracao.code,
+                            fktag=int(tag_code)
+                        ))
+
+                session.commit()  # Salva tudo junto
 
             return jsonify({"success": True})
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
-    atracoes = Atracao.getall()
-    exibicoes = Exibicao.getall()  # necessário para o select
-    return render_template('atracao.html', atracoes=atracoes, exibicoes=exibicoes)
-
+    atracoes = Atracao.getall_with_rel()
+    exibicoes = Exibicao.getall_dict()
+    tags = Tag.getall_dict()
+    return render_template('atracao.html', atracoes=atracoes, exibicoes=exibicoes, tags=tags)
 
 
 @app.route('/equipe', methods = ['GET', 'POST'])
@@ -93,7 +107,7 @@ def equipe():
         newequipe = Equipe.create(nome=nome, turma=turma, email=email, ano=ano, urlimagem=urlimagem)
         
         return redirect(url_for('equipe'))
-    equipes = Equipe.getall()
+    equipes = Equipe.getall_dict()
     return render_template('equipe.html', equipes=equipes)
 
 @app.route('/eventos', methods=['GET', 'POST'])
@@ -132,7 +146,7 @@ def evento():
             return jsonify({"success": False, "error": str(e)}), 400
 
     # GET → renderiza a página com os eventos
-    eventos = Evento.getall()
+    eventos = Evento.getall_dict()
     return render_template('eventos.html', eventos=eventos)
 
 
@@ -185,8 +199,7 @@ def locais():
     locais = Locais.getall()
     return render_template('locais.html', locais=locais)
 
-@app.route('/polo', methods = ['GET', 'POST'])
-#@login_required
+@app.route('/polo', methods=['GET', 'POST'])
 def polo():
     if request.method == 'POST':
         handle = request.form['handle']
@@ -200,11 +213,24 @@ def polo():
         ismultilocal = True if request.form.get('ismultilocal') else False
         urlimagem = request.form['urlimagem']
 
-        newpolo = Polo.create(handle=handle, nome=nome, descricao=descricao, inicio=inicio, fim=fim, endereco=endereco, latitude=latitude, longitude=longitude, ismultilocal=ismultilocal, urlimagem=urlimagem)
+        Polo.create(
+            handle=handle,
+            nome=nome,
+            descricao=descricao,
+            inicio=inicio,
+            fim=fim,
+            endereco=endereco,
+            latitude=latitude,
+            longitude=longitude,
+            ismultilocal=ismultilocal,
+            urlimagem=urlimagem
+        )
         
         return redirect(url_for('polo'))
-    polos = Polo.getall()
+
+    polos = Polo.getall_dict()
     return render_template('polo.html', polos=polos)
+
 
 @app.route('/pessoa', methods = ['GET', 'POST'])
 #@login_required
@@ -240,7 +266,7 @@ def tag():
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
-    tags = Tag.getall()
+    tags = Tag.getall_dict()
     return render_template('tag.html', tags=tags)
 
 

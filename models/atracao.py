@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text
+from sqlalchemy import Column, String, Integer, Boolean, Text
 from sqlalchemy.orm import relationship
 from .base import BaseModel
 
@@ -15,3 +15,10 @@ class Atracao(BaseModel):
     
     exibicoes = relationship('Exibicao', secondary='atracaoexibicao', back_populates='atracoes')
     tags = relationship('Tag', secondary='atracaotags', back_populates='atracoes')
+
+    def to_dict_with_rel(self):
+        d = self.to_dict()
+        d['exibicoes'] = [e.to_dict() for e in self.exibicoes]
+        d['tags'] = [t.to_dict() for t in self.tags]
+        return d
+    
