@@ -96,18 +96,26 @@ def atracao():
 
 
 @app.route('/equipe', methods = ['GET', 'POST'])
-# @login_required
 def equipe():
     if request.method == 'POST':
         nome = request.form['nome']
         turma = request.form['turma']
         email = request.form['email']
+        funcao = request.form['funcao']  # capturando função
         ano = request.form['ano']
         urlimagem = request.form['urlimagem']
 
-        newequipe = Equipe.create(nome=nome, turma=turma, email=email, ano=ano, urlimagem=urlimagem)
+        newequipe = Equipe.create(
+            nome=nome,
+            turma=turma,
+            email=email,
+            funcao=funcao, 
+            ano=ano,
+            urlimagem=urlimagem
+        )
         
         return redirect(url_for('equipe'))
+
     equipes = Equipe.getall_dict()
     return render_template('equipe.html', equipes=equipes)
 
