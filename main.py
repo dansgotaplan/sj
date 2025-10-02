@@ -21,7 +21,7 @@ def index():
     if current_user.is_authenticated:
         return render_template('home.html')
     else:
-        return render_template('homenoauth.html')
+        return render_template('home.html')
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -224,17 +224,23 @@ def pessoa():
     pessoas = Pessoa.getall()
     return render_template('pessoa.html', pessoas=pessoas)
 
-@app.route('/tag', methods = ['GET', 'POST'])
+@app.route('/tag', methods=['GET', 'POST'])
 #@login_required
 def tag():
     if request.method == 'POST':
-        handle = request.form['handle']
-        nome = request.form['nome']
+        data = request.get_json()
+        try:
+            newtag = Tag.create(
+                handle=data['handle'],
+                nome=data['nome']
+            )
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
 
-        newtag = Tag.create(handle=handle, nome=nome)
-        return redirect(url_for('tag'))
     tags = Tag.getall()
     return render_template('tag.html', tags=tags)
+
 
 @app.route('/usuario', methods = ['GET', 'POST'])
 #@login_required

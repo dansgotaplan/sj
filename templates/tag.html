@@ -3,51 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tags</title>
     <link rel="stylesheet" href="../static/css/tag.css">
 </head>
 <body>
      <div id="admin-container">
         <aside>
           <a href="home.html">
-           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
+            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+          </a>
           <ul>
-          <li data-section="atracao"><a href="/atracao">Atração</a></li>
-          <li data-section="equipe"><a href="equipe">Equipe</a></li>
-          <li data-section="eventos"><a href="eventos">Eventos</a></li>
-          <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-          <li data-section="locais"><a href="locais">Locais</a></li>
-          <li data-section="Polos"><a href="polo">Polos</a></li>
-          <li data-section="Tags"><a href="tag">Tags</a></li>
+            <li><a href="/atracao">Atração</a></li>
+            <li><a href="/equipe">Equipe</a></li>
+            <li><a href="/eventos">Eventos</a></li>
+            <li><a href="/exibicao">Exibição</a></li>
+            <li><a href="/locais">Locais</a></li>
+            <li><a href="/polo">Polos</a></li>
+            <li><a href="/tag">Tags</a></li>
           </ul>
         </aside>
         <main>
-          <div id="gerenciador-atracoes">
+          <div id="gerenciador-tags">
             <div id="topo">
               <h1>Tags:</h1>
-              
               <button id="adicionar">Adicionar tag</button>
             </div>
-             <div id="modal" class="modal">
+
+            <!-- LISTA DE TAGS -->
+            <ul>
+              {% for tag in tags %}
+                <li><b>{{ tag.nome }}</b> (handle: {{ tag.handle }})</li>
+              {% endfor %}
+            </ul>
+
+            <!-- MODAL -->
+            <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <form id="atracaoForm">
+                    <form id="tagForm">
                       <div id="inputs-container">
-
-                        <input type="text" id="handle" placeholder="Handle" required><br><br>
-                        <input type="text" id="nome" placeholder="Nome" required><br><br>
-
+                        <input type="text" name="handle" placeholder="Handle" required><br><br>
+                        <input type="text" name="nome" placeholder="Nome" required><br><br>
                       </div>
-
-                        <div class="buttons">
-                            <button type="button" id="cancelar">Cancelar</button>
-                            <button type="submit" id="salvar">Salvar</button>
-                        </div>
+                      <div class="buttons">
+                          <button type="button" id="cancelar">Cancelar</button>
+                          <button type="submit" id="salvar">Salvar</button>
+                      </div>
                     </form>
                 </div>
             </div>
-        </div>
+          </div>
         </main>
      </div>
      <script src="../static/scripts/tag.js"></script>
