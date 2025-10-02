@@ -54,7 +54,7 @@ def atracao():
         data = request.get_json()
         try:
             # Cria a atração
-            newatracao = Atracao.create(
+            Atracao.create(
                 handle=data['handle'],
                 ordem=int(data['ordem']),
                 nome=data['nome'],
@@ -114,7 +114,7 @@ def evento():
             urlimagem = data['urlimagem']
 
             # cria evento
-            newevento = Evento.create(
+            Evento.create(
                 handle=handle,
                 nome=nome,
                 descricao=descricao,
@@ -142,6 +142,9 @@ def exibicao():
     if request.method == 'POST':
         data = request.get_json()  # PEGA OS DADOS DO JSON ENVIADO PELO JS
         try:
+            for polo in polos:
+                if data['fk'] == polo["code"]:
+                    polo = polo["nome"]
             newexibicao = Exibicao.create(
                 ordem=data['ordem'],
                 fk=data['fk'],
@@ -149,7 +152,8 @@ def exibicao():
                 horario=data['horario'],
                 endereco=data['endereco'],
                 latitude=data['latitude'],
-                longitude=data['longitude']
+                longitude=data['longitude'],
+                polo=polo
             )
             return jsonify({"success": True})
         except Exception as e:
