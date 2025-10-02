@@ -2,48 +2,50 @@ const btnAdicionar = document.getElementById("adicionar");
 const modal = document.getElementById("modal");
 const fechar = document.querySelector(".fechar");
 const cancelar = document.getElementById("cancelar");
-const formEvento = document.getElementById("atracaoForm");
+const formLocal = document.getElementById("localForm");
 
-btnAdicionar.addEventListener("click", () => {
-  modal.style.display = "block";
-});
+btnAdicionar.addEventListener("click", () => modal.style.display = "block");
+fechar.addEventListener("click", () => modal.style.display = "none");
+cancelar.addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", (e) => { if(e.target === modal) modal.style.display = "none"; });
 
-fechar.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+formLocal.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-cancelar.addEventListener("click", () => {
-  modal.style.display = "none";
-});
+    // Pega todas as tags selecionadas
+    const selectedTags = Array.from(formLocal.querySelectorAll('input[name="tags"]:checked')).map(el => parseInt(el.value));
 
+    const dados = {
+        handle: formLocal.handle.value,
+        nome: formLocal.nome.value,
+        descricao: formLocal.descricao.value,
+        dias: formLocal.dias.value,
+        inicio: formLocal.inicio.value,
+        fim: formLocal.fim.value,
+        endereco: formLocal.endereco.value,
+        latitude: parseFloat(formLocal.latitude.value),
+        longitude: parseFloat(formLocal.longitude.value),
+        urlimage: formLocal.urlimage.value,
+        urlicone: formLocal.urlicone.value,
+        tags: selectedTags
+    };
 
-window.addEventListener("click", (e) => {
-  if (e.target === modal) {
+    try {
+        const response = await fetch("/locais", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados),
+        });
+
+        const json = await response.json();
+        if (json.success) location.reload();
+        else alert("Erro: " + json.error);
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+        alert("Erro ao cadastrar local.");
+    }
+
+    formLocal.reset();
     modal.style.display = "none";
-  }
-});
-
-
-formEvento.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-
-  const dados = {
-    handle: formEvento.handle.value,
-    nome: formEvento.nome.value,
-    descricao: formEvento.descricao.value,
-    dias: formEvento.dias.value,
-    inicio: formEvento.inicio.value,
-    fim: formEvento.fim.value,
-    endereco: formEvento.endereco.value,
-    latitude: formEvento.latitude.value,
-    longitude: formEvento.longitude.value,
-    urlImagem: formEvento.imagem.value,
-    urlIcone: formEvento.icone.value
-  };
-
-  console.log("Evento cadastrado:", dados);
-
-  formEvento.reset();
-  modal.style.display = "none";
 });

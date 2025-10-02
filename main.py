@@ -2,6 +2,7 @@ from models import create_tables, Atracao, AtracaoExibicao, AtracaoTags, Equipe,
 from flask import Flask, redirect, render_template, request, url_for, jsonify, make_response
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from config.database import getdb 
+from sqlalchemy.orm import joinedload
 
 
 #create_tables
@@ -177,27 +178,43 @@ def exibicao():
 
 
 
-@app.route('/locais', methods = ['GET', 'POST'])
-#@login_required
+@app.route('/locais', methods=['GET', 'POST'])
 def locais():
     if request.method == 'POST':
-        handle = request.form['handle']
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        dias = request.form['dias']
-        inicio = request.form['inicio']
-        fim = request.form['fim']
-        endereco = request.form['endereco']
-        latitude = request.form['latitude']
-        longitude = request.form['longitude']
-        urlimage = request.form['urlimage']
-        urlicone = request.form['urlicone']
-        
-        newlocal = Locais.create(handle=handle, nome=nome, descricao=descricao, dias=dias, inicio=inicio, fim=fim, endereco=endereco, latitude=latitude, longitude=longitude, urlimage=urlimage, urlicone=urlicone)
-        
-        return redirect(url_for('locais'))
-    locais = Locais.getall()
-    return render_template('locais.html', locais=locais)
+        data = request.get_json()
+        try:
+            with getdb() as session:
+                newlocal = Locais(
+                    handle=data['handle'],
+                    nome=data['nome'],
+                    descricao=data['descricao'],
+                    dias=data['dias'],
+                    inicio=data['inicio'],
+                    fim=data['fim'],
+                    endereco=data['endereco'],
+                    latitude=float(data['latitude']),
+                    longitude=float(data['longitude']),
+                    urlimage=data['urlimage'],
+                    urlicone=data['urlicone']
+                )
+                session.add(newlocal)
+                session.flush()
+
+                if data.get('tags'):
+                    for tag_code in data['tags']:
+                        session.add(LocaisTags(
+                            fklocal=newlocal.code,
+                            fktag=int(tag_code)
+                        ))
+                session.commit()
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    locais = Locais.getall_with_rel()
+    tags = Tag.getall_dict()
+    return render_template('locais.html', locais=locais, tags=tags)
+
 
 @app.route('/polo', methods=['GET', 'POST'])
 def polo():

@@ -9,6 +9,6 @@ class Tag(BaseModel):
     handle = Column(String(255), unique=True, nullable=False)
     nome = Column(String(255), nullable=False)
     
-    # Relationships
+    # Relações
     locais = relationship('Locais', secondary='locaistags', back_populates='tags')
     atracoes = relationship('Atracao', secondary='atracaotags', back_populates='tags')

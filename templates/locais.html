@@ -3,50 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Locais</title>
     <link rel="stylesheet" href="../static/css/locais.css">
 </head>
 <body>
-     <div id="admin-container">
-        <aside>
-          <a href="home.html">
-           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+<div id="admin-container">
+    <aside>
+        <a href="home.html">
+            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
-          <ul>
-          <li data-section="atracao"><a href="atracao">Atração</a></li>
-          <li data-section="equipe"><a href="equipe">Equipe</a></li>
-          <li data-section="eventos"><a href="eventos">Eventos</a></li>
-          <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-          <li data-section="locais"><a href="locais">Locais</a></li>
-          <li data-section="Polos"><a href="polo">Polos</a></li>
-          <li data-section="Tags"><a href="tag">Tags</a></li>
-          </ul>
-        </aside>
-        <main>
-          <div id="gerenciador-atracoes">
+        <ul>
+            <li data-section="atracao"><a href="atracao">Atração</a></li>
+            <li data-section="equipe"><a href="equipe">Equipe</a></li>
+            <li data-section="eventos"><a href="eventos">Eventos</a></li>
+            <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
+            <li data-section="locais"><a href="locais">Locais</a></li>
+            <li data-section="Polos"><a href="polo">Polos</a></li>
+            <li data-section="Tags"><a href="tag">Tags</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <div id="gerenciador-locais">
             <div id="topo">
-              <h1>Locais:</h1>
-              
-              <button id="adicionar">Adicionar local</button>
+                <h1>Locais:</h1>
+                <button id="adicionar">Adicionar local</button>
             </div>
-             <div id="modal" class="modal">
+
+            <!-- Lista de locais -->
+            <ul id="lista-locais">
+                {% for local in locais %}
+                    <li>
+                        <strong>{{ local.nome }}</strong> (Handle: {{ local.handle }})<br>
+                        {{ local.descricao }}<br>
+                        Dias: {{ local.dias }}<br>
+                        Horário: {{ local.inicio }} - {{ local.fim }}<br>
+                        Endereço: {{ local.endereco }}<br>
+                        Latitude: {{ local.latitude }}, Longitude: {{ local.longitude }}<br>
+                        <img src="{{ local.urlimage }}" alt="{{ local.nome }}" width="150"><br>
+                        <img src="{{ local.urlicone }}" alt="Ícone" width="50"><br>
+                        Tags: 
+                        {% for t in local.tags_names %}
+                            {{ t }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Modal de Adição -->
+            <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <form id="atracaoForm">
-                      <div id="inputs-container">
+                    <form id="localForm" method="POST">
+                        <input type="text" name="handle" placeholder="Handle" required><br><br>
+                        <input type="text" name="nome" placeholder="Nome" required><br><br>
+                        <textarea name="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
+                        <input type="text" name="dias" placeholder="Dias de funcionamento" required><br><br>
+                        <input type="time" name="inicio" placeholder="Horário de início" required><br><br>
+                        <input type="time" name="fim" placeholder="Horário de fim" required><br><br>
+                        <input type="text" name="endereco" placeholder="Endereço"><br><br>
+                        <input type="number" step="0.00001" name="latitude" placeholder="Latitude"><br><br>
+                        <input type="number" step="0.00001" name="longitude" placeholder="Longitude"><br><br>
+                        <input type="url" name="urlimage" placeholder="URL da Imagem"><br><br>
+                        <input type="url" name="urlicone" placeholder="URL do ícone"><br><br>
 
-                        <input type="text" id="handle" placeholder="Handle" required><br><br>
-                        <input type="text" id="nome" placeholder="Nome" required><br><br>
-                        <textarea id="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
-                        <input type="text" id="dias" placeholder="Dias de funcionamento" required><br><br>
-                        <input type="time" id="inicio" placeholder="Horário de inicio"></input><br><br>
-                        <input type="time" id="fim" placeholder="Horário de fim"></input><br><br>
-                        <input type="text" id="endereco" placeholder="Endereço"><br><br>
-                        <input type="number" id="latitude" placeholder="Latitude"><br><br>
-                        <input type="number" id="longitude" placeholder="Longitute"><br><br>
-                        <input type="url" id="imagem" placeholder="URL da Imagem"><br><br>
-                        <input type="url" id="icone" placeholder="URL do icone"><br><br>
-                      </div>
+                        <label>Tags:</label><br>
+                        {% for tag in tags %}
+                            <input type="checkbox" name="tags" value="{{ tag.code }}"> {{ tag.nome }}<br>
+                        {% endfor %}<br>
 
                         <div class="buttons">
                             <button type="button" id="cancelar">Cancelar</button>
@@ -55,9 +79,10 @@
                     </form>
                 </div>
             </div>
+
         </div>
-        </main>
-     </div>
-     <script src="../static/scripts/locais.js"></script>
+    </main>
+</div>
+<script src="../static/scripts/locais.js"></script>
 </body>
 </html>
