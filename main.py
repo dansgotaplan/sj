@@ -54,7 +54,7 @@ def atracao():
         data = request.get_json()
         try:
             # Cria a atração
-            newatracao = Atracao.create(
+            Atracao.create(
                 handle=data['handle'],
                 ordem=int(data['ordem']),
                 nome=data['nome'],
@@ -114,7 +114,7 @@ def evento():
             urlimagem = data['urlimagem']
 
             # cria evento
-            newevento = Evento.create(
+            Evento.create(
                 handle=handle,
                 nome=nome,
                 descricao=descricao,
@@ -137,27 +137,29 @@ def evento():
 
 
 @app.route('/exibicao', methods=['GET', 'POST'])
-#@login_required
 def exibicao():
     if request.method == 'POST':
-        data = request.get_json()  # PEGA OS DADOS DO JSON ENVIADO PELO JS
+        data = request.get_json()
         try:
-            newexibicao = Exibicao.create(
-                ordem=data['ordem'],
-                fk=data['fk'],
+            Exibicao.create(
+                ordem=int(data['ordem']),
+                fk=int(data['fk']),
                 dia=data['dia'],
                 horario=data['horario'],
                 endereco=data['endereco'],
-                latitude=data['latitude'],
-                longitude=data['longitude']
+                latitude=float(data['latitude']),
+                longitude=float(data['longitude'])
             )
             return jsonify({"success": True})
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
-    exibicoes = Exibicao.getall()  # GET → renderiza a página
-    polos = Polo.getall()  # precisa enviar a lista de polos pro select
+    # GET → pega exibicoes e polos como dicionários já com polo carregado
+    exibicoes = Exibicao.getall_with_rel()
+    polos = Polo.getall_dict()
+
     return render_template('exibicao.html', exibicoes=exibicoes, polos=polos)
+
 
 
 
