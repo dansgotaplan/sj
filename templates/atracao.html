@@ -37,7 +37,11 @@
                         <strong>{{ atracao.nome }}</strong> (Ordem: {{ atracao.ordem }})<br>
                         {{ atracao.descricao }}<br>
                         <img src="{{ atracao.urlimagem }}" alt="{{ atracao.nome }}" width="150"><br>
-                        Principal: {{ 'Sim' if atracao.principal else 'Não' }}
+                        Principal: {{ 'Sim' if atracao.principal else 'Não' }}<br>
+                        Exibições: 
+                        {% for ex in atracao.exibicoes %}
+                            {{ ex.dia }} - {{ ex.endereco }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
                     </li>
                 {% endfor %}
             </ul>
@@ -48,10 +52,15 @@
                     <span class="fechar">&times;</span>
                     <form id="atracaoForm" method="POST" action="/atracao">
                         <div id="inputs-container">
-                            <input type="text" name="handle" placeholder="Handle da Exibição" required><br><br>
+                            <input type="text" name="handle" placeholder="Handle da Atração" required><br><br>
                             <input type="text" name="nome" placeholder="Nome" required><br><br>
                             <input type="number" name="ordem" placeholder="Ordem da Exibição" required><br><br>
-                            <input type="text" name="fk" placeholder="FK" required><br><br>
+                            <select name="fk" required>
+                                <option value="">Selecione a Exibição</option>
+                                {% for exibicao in exibicoes %}
+                                    <option value="{{ exibicao.code }}">Ordem {{ exibicao.ordem }} - {{ exibicao.endereco }}</option>
+                                {% endfor %}
+                            </select><br><br>
                             <textarea name="descricao" placeholder="Descrição" rows="4" cols="50" required></textarea><br><br>
                             <input type="url" name="urlimagem" placeholder="URL da Imagem" required><br><br>
                         </div>

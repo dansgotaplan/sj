@@ -21,44 +21,41 @@ cancelar.addEventListener("click", () => {
 
 // Fechar modal clicando fora
 window.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
+  if (e.target === modal) modal.style.display = "none";
 });
 
 // Envio do formulário
 formEvento.addEventListener("submit", async (e) => {
-  e.preventDefault(); // impede envio normal do form
+  e.preventDefault();
 
-  // Pega os dados do formulário
   const dados = {
     handle: formEvento.handle.value,
     nome: formEvento.nome.value,
-    ordem: formEvento.ordem.value,
-    fk: formEvento.fk.value,
+    ordem: parseInt(formEvento.ordem.value),
+    fk: parseInt(formEvento.fk.value),
     descricao: formEvento.descricao.value,
     urlimagem: formEvento.urlimagem.value,
     principal: formEvento.principal.checked,
   };
 
   try {
-    // Envia os dados via POST para o Flask
     const response = await fetch("/atracao", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
     });
 
-    if (response.ok) {
-      location.reload(); // recarrega a página para mostrar a nova atração
+    const json = await response.json();
+    if (json.success) {
+      location.reload();
     } else {
-      console.error("Erro ao salvar atração");
+      alert("Erro: " + json.error);
     }
   } catch (error) {
     console.error("Erro na requisição:", error);
+    alert("Erro ao cadastrar atração.");
   }
 
-  // Limpa o formulário e fecha o modal
   formEvento.reset();
   modal.style.display = "none";
 });

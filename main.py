@@ -1,6 +1,8 @@
 from models import create_tables, Atracao, AtracaoExibicao, AtracaoTags, Equipe, Evento, Exibicao, Locais, LocaisTags, Pessoa, Polo, Tag, Usuario
 from flask import Flask, redirect, render_template, request, url_for, jsonify, make_response
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from config.database import getdb 
+
 
 #create_tables
 
@@ -17,22 +19,27 @@ def load_user(name):
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return render_template('homeauth.html')
+        return render_template('home.html')
     else:
         return render_template('homenoauth.html')
     
-@app.route('/login', methods = ['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
-        user = Usuario.query.filter_by(email=email).first()
+
+        # Usa o getdb() como context manager
+        with getdb() as db:
+            user = db.query(Usuario).filter_by(email=email).first()
+
         if user and user.senha == senha:
             login_user(user)
             return redirect(url_for('index'))
         else:
             return 'Falha no login. Verifique suas credenciais.'
     return render_template('login.html')
+
 
 @app.route('/logout')
 @login_required
@@ -41,25 +48,35 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/atracao', methods=['GET', 'POST'])
+#@login_required
 def atracao():
     if request.method == 'POST':
         data = request.get_json()
         try:
+            # Cria a atração
             newatracao = Atracao.create(
                 handle=data['handle'],
                 ordem=int(data['ordem']),
-                fk=int(data['fk']) if data['fk'] else None,
                 nome=data['nome'],
                 descricao=data['descricao'],
                 principal=bool(data['principal']),
                 urlimagem=data['urlimagem']
             )
+
+            # Cria o relacionamento com Exibicao
+            if data.get('fk'):
+                AtracaoExibicao.create(
+                    fkatracao=newatracao.code,
+                    fkexibicao=int(data['fk'])
+                )
+
             return jsonify({"success": True})
         except Exception as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
     atracoes = Atracao.getall()
-    return render_template('atracao.html', atracoes=atracoes)
+    exibicoes = Exibicao.getall()  # necessário para o select
+    return render_template('atracao.html', atracoes=atracoes, exibicoes=exibicoes)
 
 
 
@@ -119,27 +136,33 @@ def evento():
     return render_template('eventos.html', eventos=eventos)
 
 
-@app.route('/exibicao', methods = ['GET', 'POST'])
-@login_required
+@app.route('/exibicao', methods=['GET', 'POST'])
+#@login_required
 def exibicao():
     if request.method == 'POST':
-        ordem = request.form['ordem']
-        fk = request.form['fk']
-        dia = request.form['dia']
-        horario = request.form['horario']
-        endereco = request.form['endereco']
-        latitude = request.form['latitude']
-        longitude = request.form['longitude']
-        urlimagem = request.form['urlimagem']
-        
-        newexibicao = Exibicao.create(ordem=ordem, fk=fk, dia=dia, horario=horario, endereco=endereco, latitude=latitude, longitude=longitude, urlimagem=urlimagem)
-        
-        return redirect(url_for('exibicao'))
-    exibicoes = Exibicao.getall()
-    return render_template('exibicao.html', exibicoes=exibicoes)
+        data = request.get_json()  # PEGA OS DADOS DO JSON ENVIADO PELO JS
+        try:
+            newexibicao = Exibicao.create(
+                ordem=data['ordem'],
+                fk=data['fk'],
+                dia=data['dia'],
+                horario=data['horario'],
+                endereco=data['endereco'],
+                latitude=data['latitude'],
+                longitude=data['longitude']
+            )
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    exibicoes = Exibicao.getall()  # GET → renderiza a página
+    polos = Polo.getall()  # precisa enviar a lista de polos pro select
+    return render_template('exibicao.html', exibicoes=exibicoes, polos=polos)
+
+
 
 @app.route('/locais', methods = ['GET', 'POST'])
-@login_required
+#@login_required
 def locais():
     if request.method == 'POST':
         handle = request.form['handle']
@@ -182,7 +205,7 @@ def polo():
     return render_template('polo.html', polos=polos)
 
 @app.route('/pessoa', methods = ['GET', 'POST'])
-@login_required
+#@login_required
 def pessoa():
     if request.method == 'POST':
         handle = request.form['handle']
@@ -202,7 +225,7 @@ def pessoa():
     return render_template('pessoa.html', pessoas=pessoas)
 
 @app.route('/tag', methods = ['GET', 'POST'])
-@login_required
+#@login_required
 def tag():
     if request.method == 'POST':
         handle = request.form['handle']
@@ -214,7 +237,7 @@ def tag():
     return render_template('tag.html', tags=tags)
 
 @app.route('/usuario', methods = ['GET', 'POST'])
-@login_required
+#@login_required
 def usuario():
     if request.method == 'POST':
         email = request.form['email']
