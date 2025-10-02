@@ -64,7 +64,7 @@ def atracao():
 
 
 @app.route('/equipe', methods = ['GET', 'POST'])
-@login_required
+# @login_required
 def equipe():
     if request.method == 'POST':
         nome = request.form['nome']
@@ -79,26 +79,45 @@ def equipe():
     equipes = Equipe.getall()
     return render_template('equipe.html', equipes=equipes)
 
-@app.route('/evento', methods = ['GET', 'POST'])
-@login_required
+@app.route('/eventos', methods=['GET', 'POST'])
+# @login_required   # se quiser exigir login, descomenta
 def evento():
     if request.method == 'POST':
-        handle = request.form['handle']
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        inicio = request.form['inicio']
-        fim = request.form0['fim']
-        horario = request.form['horario']
-        endereco = request.form['endereco']
-        latitude = request.form['latitude']
-        longitude = request.form['longitude']
-        urlimagem = request.form['urlimagem']
+        data = request.get_json()  # pega dados enviados pelo eventos.js
+        try:
+            handle = data['handle']
+            nome = data['nome']
+            descricao = data['descricao']
+            inicio = data['inicio']
+            fim = data['fim']
+            horario = data['horario']
+            endereco = data['endereco']
+            latitude = float(data['latitude']) if data['latitude'] else None
+            longitude = float(data['longitude']) if data['longitude'] else None
+            urlimagem = data['urlimagem']
 
-        newevento = Evento.create(handle=handle, nome=nome, descricao=descricao, inicio=inicio, fim=fim, horario=horario, endereco=endereco, latitude=latitude, longitude=longitude, urlimagem=urlimagem)
-        
-        return redirect(url_for('evento'))
+            # cria evento
+            newevento = Evento.create(
+                handle=handle,
+                nome=nome,
+                descricao=descricao,
+                inicio=inicio,
+                fim=fim,
+                horario=horario,
+                endereco=endereco,
+                latitude=latitude,
+                longitude=longitude,
+                urlimagem=urlimagem
+            )
+
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    # GET → renderiza a página com os eventos
     eventos = Evento.getall()
-    return render_template('evento.html', eventos=eventos)
+    return render_template('eventos.html', eventos=eventos)
+
 
 @app.route('/exibicao', methods = ['GET', 'POST'])
 @login_required
@@ -153,7 +172,7 @@ def polo():
         endereco = request.form['endereco']
         latitude = request.form['latitude']
         longitude = request.form['longitude']
-        ismultilocal = bool(request.form['ismultilocal'])
+        ismultilocal = True if request.form.get('ismultilocal') else False
         urlimagem = request.form['urlimagem']
 
         newpolo = Polo.create(handle=handle, nome=nome, descricao=descricao, inicio=inicio, fim=fim, endereco=endereco, latitude=latitude, longitude=longitude, ismultilocal=ismultilocal, urlimagem=urlimagem)

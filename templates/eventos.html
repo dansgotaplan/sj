@@ -3,49 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Eventos</title>
     <link rel="stylesheet" href="../static/css/eventos.css">
 </head>
 <body>
-     <div id="admin-container">
-        <aside>
-          <a href="home.html">
-           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+<div id="admin-container">
+    <aside>
+        <a href="home.html">
+            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
-          <ul>
-          <li data-section="atracao"><a href="atracao.html">Atração</a></li>
-          <li data-section="equipe"><a href="equipe.html">Equipe</a></li>
-          <li data-section="eventos"><a href="eventos.html">Eventos</a></li>
-          <li data-section="exibicao"><a href="exibicao.html">Exibição</a></li>
-          <li data-section="locais"><a href="locais.html">Locais</a></li>
-          <li data-section="Polos"><a href="polo.html">Polos</a></li>
-          <li data-section="Tags"><a href="tag.html">Tags</a></li>
-          </ul>
-        </aside>
-        <main>
-          <div id="gerenciador-atracoes">
+        <ul>
+            <li data-section="atracao"><a href="atracao.html">Atração</a></li>
+            <li data-section="equipe"><a href="equipe.html">Equipe</a></li>
+            <li data-section="eventos"><a href="eventos.html">Eventos</a></li>
+            <li data-section="exibicao"><a href="exibicao.html">Exibição</a></li>
+            <li data-section="locais"><a href="locais.html">Locais</a></li>
+            <li data-section="Polos"><a href="polo.html">Polos</a></li>
+            <li data-section="Tags"><a href="tag.html">Tags</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <div id="gerenciador-eventos">
             <div id="topo">
-              <h1>Eventos:</h1>
-              
-              <button id="adicionar">Adicionar evento</button>
+                <h1>Eventos:</h1>
+                <button id="adicionar">Adicionar evento</button>
             </div>
-             <div id="modal" class="modal">
+
+            <!-- Lista de eventos -->
+            <ul id="lista-eventos">
+                {% for evento in eventos %}
+                    <li>
+                        <strong>{{ evento.nome }}</strong> (Início: {{ evento.inicio }}{% if evento.fim %} - Fim: {{ evento.fim }}{% endif %})<br>
+                        Horário: {{ evento.horario }}<br>
+                        {{ evento.descricao }}<br>
+                        {{ evento.endereco }}<br>
+                        Latitude: {{ evento.latitude }}, Longitude: {{ evento.longitude }}<br>
+                        <img src="{{ evento.urlimagem }}" alt="{{ evento.nome }}" width="150"><br>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Modal de Adição -->
+            <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <form id="atracaoForm">
-                      <div id="inputs-container">
-
-                        <input type="text" id="handle" placeholder="Handle" required><br><br>
-                        <input type="text" id="nome" placeholder="Nome" required><br><br>
-                        <textarea id="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
-                        <input type="date" id="inicio" placeholder="E-mail do integrante" required><br><br>
-                        <input type="date" id="fim" placeholder="Função do integrante"></input><br><br>
-                        <input type="time" id="horario" placeholder="Função do integrante"></input><br><br>
-                        <input type="text" id="endereco" placeholder="Endereço"><br><br>
-                        <input type="number" id="latitude" placeholder="Latitude"><br><br>
-                        <input type="number" id="longitude" placeholder="Longitute"><br><br>
-                        <input type="url" id="imagem" placeholder="URL da Imagem"><br><br>
-                      </div>
+                    <form id="eventoForm" method="POST" action="/evento">
+                        <div id="inputs-container">
+                            <input type="text" name="handle" placeholder="Handle" required><br><br>
+                            <input type="text" name="nome" placeholder="Nome" required><br><br>
+                            <textarea name="descricao" placeholder="Descrição" rows="4" cols="50" required></textarea><br><br>
+                            <input type="date" name="inicio" required><br><br>
+                            <input type="date" name="fim"><br><br>
+                            <input type="time" name="horario" required><br><br>
+                            <input type="text" name="endereco" placeholder="Endereço" required><br><br>
+                            <input type="number" step="0.00001" name="latitude" placeholder="Latitude" required><br><br>
+                            <input type="number" step="0.00001" name="longitude" placeholder="Longitude" required><br><br>
+                            <input type="url" name="urlimagem" placeholder="URL da Imagem" required><br><br>
+                        </div>
 
                         <div class="buttons">
                             <button type="button" id="cancelar">Cancelar</button>
@@ -54,9 +69,11 @@
                     </form>
                 </div>
             </div>
+
         </div>
-        </main>
-     </div>
-     <script src="../static/scripts/eventos.js"></script>
+    </main>
+</div>
+
+<script src="../static/scripts/eventos.js"></script>
 </body>
 </html>

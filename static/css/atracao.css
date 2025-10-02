@@ -144,3 +144,50 @@ main {
   flex: 1;
 }
 
+/* Lista de atrações */
+#lista-atracoes {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+#lista-atracoes li {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#lista-atracoes li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Nome da atração */
+#lista-atracoes li strong {
+  font-size: 20px;
+  color: #1c9c43;
+}
+
+/* Imagem da atração */
+#lista-atracoes li img {
+  margin-top: 10px;
+  border-radius: 8px;
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border: 1px solid #333;
+}
+
+/* Texto extra */
+#lista-atracoes li span,
+#lista-atracoes li p {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.4;
+}
+
