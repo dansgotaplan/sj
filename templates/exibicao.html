@@ -33,13 +33,15 @@
             <!-- Lista de exibições -->
             <ul id="lista-exibicoes">
                 {% for exibicao in exibicoes %}
-                    <li>
-                        <strong>Ordem: {{ exibicao.ordem }}</strong> 
-                        (Polo: {{ exibicao.polo.nome if exibicao.polo else "Sem Polo" }})<br>
-                        Dia: {{ exibicao.dia }}<br>
-                        Horário: {{ exibicao.horario }}<br>
-                        Endereço: {{ exibicao.endereco }}<br>
-                        Latitude: {{ exibicao.latitude }}, Longitude: {{ exibicao.longitude }}<br>
+                    <li id="card-exibicoes">
+                        <div id="card-topo">
+                            <strong>Ordem: {{ exibicao.ordem }}</strong> 
+                            <label id="card-polo-ligacao">(Polo: {{ exibicao.polo.nome if exibicao.polo else "Sem Polo" }})</label><br>
+                        </div>
+                        <label id="card-dia">Dia: {{ exibicao.dia }}</label><br>
+                        <label id="card-horario">Horário: {{ exibicao.horario }}</label><br>
+                        <label id="card-endereco">Endereço: {{ exibicao.endereco }}</label><br>
+                        <label id="card-local">Latitude: {{ exibicao.latitude }}, Longitude: {{ exibicao.longitude }}</label>   
                         <button class="excluir" data-id="{{ exibicao.code }}">Excluir</button>
                     </li>
                 {% endfor %}

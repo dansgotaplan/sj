@@ -92,6 +92,8 @@ main {
   border: 1px solid #444;
   width: 400px;
   border-radius: 12px;
+  max-height: 75vh;  
+  overflow-y: auto;
 }
 .fechar {
   float: right;
@@ -143,4 +145,58 @@ main {
 #admin-container{
   flex: 1;
 }
+#lista-exibicoes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card */
+#card-exibicoes {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    padding: 10px;
+}
+
+#card-topo {
+
+    font-size: 30px;
+    margin-bottom: 5px;
+    color: #fff;
+
+}
+
+#card-polo-ligacao {
+    font-size: 13px;
+    color: #979797;
+}
+
+/* Descrição */
+
+
+/* Endereço */
+#card-endereco {
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Localização */
+#card-local {
+    font-size: 13px;
+    color: #bbb;
+}
+
+/* Multilocal */
+#card-ismultilocal {
+    font-size: 13px;
+    color: #66ff99;
+}
+
 

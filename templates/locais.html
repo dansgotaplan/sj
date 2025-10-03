@@ -30,22 +30,29 @@
                 <button id="adicionar">Adicionar local</button>
             </div>
 
-            <!-- Lista de locais -->
+            <!-- Lista de locais em cards -->
             <ul id="lista-locais">
                 {% for local in locais %}
-                    <li>
-                        <strong>{{ local.nome }}</strong> (Handle: {{ local.handle }})<br>
-                        {{ local.descricao }}<br>
-                        Dias: {{ local.dias }}<br>
-                        Horário: {{ local.inicio }} - {{ local.fim }}<br>
-                        Endereço: {{ local.endereco }}<br>
-                        Latitude: {{ local.latitude }}, Longitude: {{ local.longitude }}<br>
-                        <img src="{{ local.urlimage }}" alt="{{ local.nome }}" width="150"><br>
-                        <img src="{{ local.urlicone }}" alt="Ícone" width="50"><br>
-                        Tags: 
-                        {% for t in local.tags_names %}
-                            {{ t }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}<br>
+                    <li id="card-locais">
+                        <img id="card-imagem" src="{{ local.urlimage }}" alt="{{ local.nome }}">
+
+                        <div id="card-info">
+                            <div id="card-topo">
+                                <strong>{{ local.nome }}</strong> 
+                                <label id="card-dias">(Início: {{ local.inicio }} - Fim: {{ local.fim }})</label>
+                            </div>
+
+                            <label id="card-descricao">{{ local.descricao }}</label>
+                            <label id="card-endereco">{{ local.endereco }}</label>
+                            <label id="card-local">Latitude: {{ local.latitude }}, Longitude: {{ local.longitude }}</label>
+
+                            <label id="card-tags">Tags: 
+                                {% for t in local.tags_names %}
+                                    {{ t }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </label>
+                        </div>
+
                         <!-- Botão de excluir -->
                         <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
                     </li>

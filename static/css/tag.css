@@ -14,7 +14,7 @@ aside {
     width: 230px;
     background-color: #08095b;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -145,3 +145,33 @@ main {
   flex: 1;
 }
 
+#lista-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card */
+#card-tags {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    display: flex; /* coloca imagem + info lado a lado */
+    align-items: center;
+    gap: 20px;
+}
+#card-handle {
+    font-size: 15px;
+    color: #aaa;
+}
+#card-nome {
+    font-size: 18px;
+    color: #fff;
+}

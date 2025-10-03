@@ -30,19 +30,26 @@
                 <button id="adicionar">Adicionar polo</button>
             </div>
 
-            <!-- Lista de polos -->
+            <!-- Lista de polos com card -->
             <ul id="lista-polos">
                 {% for polo in polos %}
-                    <li>
-                        <strong>{{ polo.nome }}</strong> (Início: {{ polo.inicio }} - Fim: {{ polo.fim }})<br>
-                        {{ polo.descricao }}<br>
-                        {{ polo.endereco }}<br>
-                        Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}<br>
-                        Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}<br>
-                        <img src="{{ polo.urlimagem }}" alt="{{ polo.nome }}" width="150"><br>
+                    <li id="card-polos">
+                        <img id="card-imagem" src="{{ polo.urlimagem }}" alt="{{ polo.nome }}">
+
+                        <div id="card-info">
+                            <div id="card-topo">
+                                <strong>{{ polo.nome }}</strong> 
+                                <label id="card-dias">(Início: {{ polo.inicio }} - Fim: {{ polo.fim }})</label>
+                            </div>
+
+                            <label id="card-descricao">{{ polo.descricao }}</label>
+                            <label id="card-endereco">{{ polo.endereco }}</label>
+                            <label id="card-local">Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}</label>
+                            <label id="card-ismultilocal">Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}</label>
+                        </div>
 
                         <!-- Botão de excluir -->
-                        <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
+                        <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
                     </li>
                 {% endfor %}
             </ul>
