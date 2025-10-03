@@ -33,7 +33,11 @@
             <!-- Lista de integrantes -->
             <ul id="lista-equipe">
                 {% for integrante in equipes %}
+<<<<<<< HEAD
               <li id="card-equipe">
+=======
+                    <li id="card-equipe">
+>>>>>>> upstream/main
                         <img  id="card-imagem" src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
                         <div id="card-info">
                             <div id="card-topo">
@@ -45,9 +49,12 @@
                             <label id="card-email">E-mail: {{ integrante.email }}</label><br>
                         </div>
                         <div id="card-ano">{{ integrante.ano }}</div><br>
+<<<<<<< HEAD
                         <form method="GET" action="/equipe/excluir/{{ integrante.code }}" style="display:inline;">
                             <button type="submit">Excluir</button>
                         </form>
+=======
+>>>>>>> upstream/main
                     </li>
                 {% endfor %}
             </ul>

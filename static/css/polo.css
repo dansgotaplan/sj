@@ -152,6 +152,82 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
+<<<<<<< HEAD
+}
+
+/* Card */
+#card-polos {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    display: flex; /* coloca imagem + info lado a lado */
+    align-items: center;
+    gap: 20px;
+}
+
+/* Imagem */
+#card-imagem {
+
+    width: 21%;
+    height: auto;
+    border-radius: 10px 0px 0px 10px;
+}
+
+/* Container das informações ao lado da imagem */
+#card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Topo (nome + datas) */
+#card-topo {
+
+    align-items: center;
+    font-size: 35px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+#card-info {
+    padding: 15px;
+    flex: 1;
+}
+/* Datas */
+#card-dias {
+    font-size: 13px;
+    color: #979797;
+}
+
+/* Descrição */
+#card-descricao {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ddd;
+    word-break: break-word;
+}
+
+/* Endereço */
+#card-endereco {
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Localização */
+#card-local {
+    font-size: 13px;
+    color: #bbb;
+}
+
+/* Multilocal */
+#card-ismultilocal {
+    font-size: 13px;
+    color: #66ff99;
+=======
+>>>>>>> upstream/main
 }
 
 /* Card */
@@ -226,4 +302,5 @@ main {
     font-size: 13px;
     color: #66ff99;
 }
+
 
