@@ -31,20 +31,14 @@
 
             <!-- LISTA DE TAGS -->
             <ul id="lista-tags">
-<<<<<<< HEAD
                 {% for tag in tags %}
                     <li id="card-tags">
                         <b id="card-nome">{{ tag.nome }}</b> <b id="card-handle">(handle: {{ tag.handle }}) </b>
                         <form method="GET" action="/tag/excluir/{{ tag.code }}" style="display:inline;">
-                            <button type="submit">Excluir</button>
+                            <button type="submit" class="excluir">Excluir</button>
                         </form>
                     </li>
                 {% endfor %}
-=======
-              {% for tag in tags %}
-                <li id="card-tags"><b id="card-nome">{{ tag.nome }}</b> <b id="card-handle">(handle: {{ tag.handle }})</b></li>
-              {% endfor %}
->>>>>>> upstream/main
             </ul>
 
             <!-- MODAL -->

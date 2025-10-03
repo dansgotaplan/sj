@@ -34,7 +34,6 @@
             <ul id="lista-locais">
                 {% for local in locais %}
                     <li id="card-locais">
-<<<<<<< HEAD
                         <img id="card-imagem" src="{{ local.urlimage }}" alt="{{ local.nome }}">
 
                         <div id="card-info">
@@ -52,38 +51,10 @@
                                     {{ t }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </label>
+                            <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
                         </div>
 
                         <!-- Botão de excluir -->
-                        <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
-=======
-                        <img id="card-imagem" src="{{ local.urlimage }}" alt="{{ local.nome }}" ><br>
-                            <div id="card-info">
-                                <div id="card-texto">
-                                    <label id="card-topo">
-                                        <strong>{{ local.nome }}</strong> 
-                                        <label id="card-handle">(Handle: {{ local.handle }})</label><br>
-                                    </label>
-                                    <label id="card-tags">
-                                        Tags: 
-                                        {% for t in local.tags_names %}
-                                        {{ t }}{% if not loop.last %}, {% endif %}
-                                    </label><br><br>
-                                    <label id="card-descricao">{{ local.descricao }}</label><br>
-                                    <div id="dias-horario">
-                                        <label id="card-dias">Dias: {{ local.dias }}</label><br>
-                                        <label id="card-horario">Horário: {{ local.inicio }} - {{ local.fim }}</label><br>
-                                    </div>
-                                    <div id="endereco-local">
-                                        <label id="card-endereco">Endereço: {{ local.endereco }}</label><br>
-                                        <label id="card-local">Latitude: {{ local.latitude }}, Longitude: {{ local.longitude }}</label><br>
-                                    </div>
-
-                                </div>
-                                    <img id="card-icone" src="{{ local.urlicone }}" alt="Ícone" width="50"><br>
-                            </div>
-                        {% endfor %}
->>>>>>> upstream/main
                     </li>
                 {% endfor %}
             </ul>

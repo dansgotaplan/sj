@@ -12,7 +12,7 @@ header {
 }
 aside {
     width: 230px;
-    background: linear-gradient(135deg, #050a5b,#0b00ab);
+    background-color: #08095b;
     height: 100vh;
     position: fixed;
     color: white;
@@ -172,9 +172,8 @@ main {
 }
 #card-info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 6px;
-    align-items: center;
 }
 #card-imagem {
 
@@ -204,6 +203,7 @@ main {
 }
 #card-dias {
     margin-right: 50px;
+    font-size: 15px;
 }
 #endereco-local {
     font-size: 15px;
@@ -217,4 +217,14 @@ main {
 }
 #card-icone {
     margin-left: 20px;
+}
+.excluir {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
 }

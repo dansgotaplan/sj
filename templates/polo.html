@@ -30,10 +30,7 @@
                 <button id="adicionar">Adicionar polo</button>
             </div>
 
-<<<<<<< HEAD
             <!-- Lista de polos com card -->
-=======
->>>>>>> upstream/main
             <ul id="lista-polos">
                 {% for polo in polos %}
                     <li id="card-polos">
@@ -49,13 +46,9 @@
                             <label id="card-endereco">{{ polo.endereco }}</label>
                             <label id="card-local">Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}</label>
                             <label id="card-ismultilocal">Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}</label>
+                            <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="excluir" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
                         </div>
-<<<<<<< HEAD
-
                         <!-- Botão de excluir -->
-                        <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
-=======
->>>>>>> upstream/main
                     </li>
                 {% endfor %}
             </ul>
@@ -74,7 +67,7 @@
                             <input type="number" step="0.00001" name="latitude" placeholder="Latitude"><br><br>
                             <input type="number" step="0.00001" name="longitude" placeholder="Longitude"><br><br>
                             <input type="url" name="urlimagem" placeholder="URL da Imagem"><br><br>
-                        </div>
+                        </div>3
 
                         <label>
                             É multilocal?
