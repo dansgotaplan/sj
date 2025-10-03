@@ -12,7 +12,7 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
     position: fixed;
     color: white;
@@ -217,8 +217,4 @@ main {
 }
 #card-icone {
     margin-left: 20px;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> upstream/main

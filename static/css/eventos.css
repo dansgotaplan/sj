@@ -1,4 +1,4 @@
-body{
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -12,15 +12,14 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
     z-index: 1;
-    
 }
 #logo {
     width: 200px;
@@ -33,7 +32,6 @@ aside {
 aside ul {
     list-style-type: none;
     padding: 0;
-    
 }
 aside ul li {
     padding: 10px;
@@ -48,7 +46,6 @@ a {
   color:white;
   text-decoration: none;
 }
-
 main {
     margin-left: 230px;
     padding: 20px;
@@ -144,103 +141,80 @@ main {
 }
 #admin-container{
   flex: 1;
-<<<<<<< HEAD
 }
 
-/* Lista de atrações */
-#lista-atracoes {
-  list-style-type: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+/* ------------------- LISTA DE EVENTOS (CARDS) ------------------- */
+#lista-eventos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-#lista-atracoes li {
-  background-color: #2a2a2a;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 20px;
-  color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Card de evento */
+#card-evento {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+#card-evento:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
 
-#lista-atracoes li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+/* Imagem */
+#card-evento img {
+    width: 22%;
+    height: auto;
+    border-radius: 10px 0px 0px 10px;
 }
 
-/* Nome da atração */
-#lista-atracoes li strong {
-  font-size: 20px;
-  color: #1c9c43;
+/* Info */
+#card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 15px;
+    flex: 1;
 }
 
-/* Imagem da atração */
-#lista-atracoes li img {
-  margin-top: 10px;
-  border-radius: 8px;
-  width: 100%;
-  max-height: 160px;
-  object-fit: cover;
-  border: 1px solid #333;
+/* Nome */
+#card-topo {
+    font-size: 28px;
+    color: #1c9c43;
+    font-weight: bold;
 }
 
-/* Texto extra */
-#lista-atracoes li span,
-#lista-atracoes li p {
-  font-size: 14px;
-  color: #ccc;
-  line-height: 1.4;
-}
-=======
+/* Datas */
+#card-datas {
+    font-size: 15px;
+    color: #bbb;
 }
 
-/* Lista de atrações */
-#lista-atracoes {
-  list-style-type: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+/* Descrição */
+#card-descricao {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.4;
 }
 
-#lista-atracoes li {
-  background-color: #2a2a2a;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 20px;
-  color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Endereço */
+#card-local {
+    font-weight: bold;
+    color: #fff;
 }
 
-#lista-atracoes li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+/* Coordenadas */
+#card-coords {
+    font-size: 13px;
+    color: #979797;
 }
-
-/* Nome da atração */
-#lista-atracoes li strong {
-  font-size: 20px;
-  color: #1c9c43;
-}
-
-/* Imagem da atração */
-#lista-atracoes li img {
-  margin-top: 10px;
-  border-radius: 8px;
-  width: 100%;
-  max-height: 160px;
-  object-fit: cover;
-  border: 1px solid #333;
-}
-
-/* Texto extra */
-#lista-atracoes li span,
-#lista-atracoes li p {
-  font-size: 14px;
-  color: #ccc;
-  line-height: 1.4;
-}
-
->>>>>>> upstream/main

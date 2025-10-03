@@ -13,9 +13,9 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -52,38 +52,104 @@ a {
 }
 #bandeirinhas {
     width: 100%;
-    position: fixed;
-    margin-left: 230px;
+    position: absolute;
 
 
 }
 
     
 main {
+    flex:1;
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     width: 100%;
-    text-align: center;
     flex-direction: column;
     margin-left: 230px;
+    margin-top: 5%;
+    padding-bottom: 80px;
+}
+/* Container dos cards */
+.container-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* espaço entre os cards */
+  justify-content: center;
+  margin-top: 30px;
+  list-style:none ;
 }
 
-p {
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
+/* Card individual */
+.card {
+  background: #1e1e1e;          /* fundo escuro */
+  color: #fff;                  /* texto branco */
+  padding: 20px;
+  border-radius: 16px;           /* cantos arredondados */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: 90px;
+  height: 60px;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
 }
-input {
-    padding: 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 100px;
-    width: 40%;
+
+/* Texto dentro do card */
+.card h2 {
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+/* Efeito hover */
+.card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #ff6600, #ffcc00);
+  color: #000;
+}
+#titulo-main{
+    color: white;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: -15px;
+}
+#titulo-instrucoes{
+    color: white;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
     margin-top: 20px;
-    background-color: #303030;
-    justify-content: center;
-    align-items: center;
+}
+#lista-instrucoes{
+    color: white;
+    font-size: 16px;
     margin-top: 10px;
+    list-style: none;
+    
+}
+#titulo-itens{
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    margin-top: 30px;
+}
+#item-instrucao{
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+    list-style: none;
+}
+#Subtitulo{
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
 }

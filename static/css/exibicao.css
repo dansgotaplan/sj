@@ -12,9 +12,9 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -198,9 +198,3 @@ main {
     font-size: 13px;
     color: #66ff99;
 }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/main
-

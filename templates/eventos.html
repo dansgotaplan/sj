@@ -9,22 +9,22 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="home.html">
+        <a href="/">
             <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
         <ul>
-            <li data-section="atracao"><a href="atracao">Atração</a></li>
-            <li data-section="equipe"><a href="equipe">Equipe</a></li>
-            <li data-section="eventos"><a href="eventos">Eventos</a></li>
-            <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-            <li data-section="locais"><a href="locais">Locais</a></li>
-            <li data-section="Polos"><a href="polo">Polos</a></li>
-            <li data-section="Tags"><a href="tag">Tags</a></li>
+            <li><a href="atracao">Atração</a></li>
+            <li><a href="equipe">Equipe</a></li>
+            <li><a href="eventos">Eventos</a></li>
+            <li><a href="exibicao">Exibição</a></li>
+            <li><a href="locais">Locais</a></li>
+            <li><a href="polo">Polos</a></li>
+            <li><a href="tag">Tags</a></li>
         </ul>
     </aside>
 
     <main>
-        <div id="gerenciador-atracoes">
+        <div id="gerenciador-eventos">
             <div id="topo">
                 <h1>Eventos:</h1>
                 <button id="adicionar">Adicionar evento</button>
@@ -33,17 +33,24 @@
             <!-- Lista de eventos -->
             <ul id="lista-eventos">
                 {% for evento in eventos %}
-                    <li>
-                        <strong>{{ evento.nome }}</strong> (Início: {{ evento.inicio }}{% if evento.fim %} - Fim: {{ evento.fim }}{% endif %})<br>
-                        Horário: {{ evento.horario }}<br>
-                        {{ evento.descricao }}<br>
-                        {{ evento.endereco }}<br>
-                        Latitude: {{ evento.latitude }}, Longitude: {{ evento.longitude }}<br>
-                        <img src="{{ evento.urlimagem }}" alt="{{ evento.nome }}" width="150"><br>
-                        <form method="GET" action="/eventos/excluir/{{ evento.code }}" style="display:inline;">
-                            <button type="submit">Excluir</button>
+                <li id="card-evento">
+                    <img src="{{ evento.urlimagem }}" alt="{{ evento.nome }}">
+                    <div id="card-info">
+                        <div id="card-topo">{{ evento.nome }}</div>
+                        <div id="card-datas">
+                            Início: {{ evento.inicio }}
+                            {% if evento.fim %} - Fim: {{ evento.fim }}{% endif %} |
+                            Horário: {{ evento.horario }}
+                        </div>
+                        <div id="card-descricao">{{ evento.descricao }}</div>
+                        <div id="card-local">{{ evento.endereco }}</div>
+                        <div id="card-coords">Lat: {{ evento.latitude }}, Lng: {{ evento.longitude }}</div>
+
+                        <form method="GET" action="/eventos/excluir/{{ evento.code }}" style="margin-top:10px;">
+                            <button type="submit" class="excluir">Excluir</button>
                         </form>
-                    </li>
+                    </div>
+                </li>
                 {% endfor %}
             </ul>
 
@@ -62,9 +69,8 @@
                             <input type="text" name="endereco" placeholder="Endereço" required><br><br>
                             <input type="number" step="0.00001" name="latitude" placeholder="Latitude" required><br><br>
                             <input type="number" step="0.00001" name="longitude" placeholder="Longitude" required><br><br>
-                            <input type="url" name="urlimagem" placeholder="URL da Imagem" ><br><br>
+                            <input type="url" name="urlimagem" placeholder="URL da Imagem"><br><br>
                         </div>
-
                         <div class="buttons">
                             <button type="button" id="cancelar">Cancelar</button>
                             <button type="submit" id="salvar">Salvar</button>
@@ -72,7 +78,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </main>
 </div>

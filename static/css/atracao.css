@@ -1,61 +1,68 @@
-body{
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #212121;
     display: flex;
 }
+
 header {
     color: white;
     padding: 10px 0;
     text-align: center;
 }
+
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
     z-index: 1;
-    
 }
+
 #logo {
     width: 200px;
     height: auto;
 }
+
 #logo:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
 }
+
 aside ul {
     list-style-type: none;
     padding: 0;
-    
 }
+
 aside ul li {
     padding: 10px;
     cursor: pointer;
     text-align: center;
 }
+
 aside ul li:hover {
     background-color: #000080;
     text-decoration: underline;
 }
+
 a {
-  color:white;
+  color: white;
   text-decoration: none;
 }
 
 main {
     margin-left: 230px;
     padding: 20px;
-    color: white;     
-    flex:1;
+    color: white;
+    flex: 1;
     min-height: 100vh;
 }
+
 #topo {
     margin-top: 50px;
     display: flex;
@@ -64,6 +71,7 @@ main {
     margin-bottom: 50px;
     margin-right: 50px;
 }
+
 #adicionar {
     background-color: #1c9c43;
     color: white;
@@ -73,6 +81,7 @@ main {
     border-radius: 5px;
     font-weight: bold;
 }
+
 #modal {
   display: none;
   position: fixed;
@@ -93,6 +102,7 @@ main {
   width: 400px;
   border-radius: 12px;
 }
+
 .fechar {
   float: right;
   font-size: 22px;
@@ -100,6 +110,7 @@ main {
   color: #fff;
   cursor: pointer;
 }
+
 #inputs-container input, #inputs-container textarea {
   width: 100%;
   padding: 10px;
@@ -116,77 +127,133 @@ main {
   justify-content: space-between;
   margin-top: 40px;
 }
+
 .buttons button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
+
 .buttons #salvar {
   background-color: #1c9c43;
   color: white;
   font-weight: bold;
 }
+
 .buttons #cancelar {
   background-color: #e50914;
   color: white;
   font-weight: bold;
 }
+
 #label-checkbox input {
   cursor: pointer;
 }
+
 #label-checkbox {
   display: flex;
   gap: 10px;
   margin-top: 10px;
 }
-#admin-container{
+
+#admin-container {
   flex: 1;
 }
 
-/* Lista de atrações */
+/* LISTA DE ATRAÇÕES */
 #lista-atracoes {
-  list-style-type: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-#lista-atracoes li {
-  background-color: #2a2a2a;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 20px;
-  color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* CARD DE ATRAÇÃO */
+#card-atracao {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
 }
 
-#lista-atracoes li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+#card-atracao:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+/* Imagem */
+#card-imagem {
+    width: 20%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #333;
+    object-fit: cover;
+}
+
+/* Informações */
+#card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 15px;
+    flex: 1;
 }
 
 /* Nome da atração */
-#lista-atracoes li strong {
-  font-size: 20px;
-  color: #1c9c43;
+#card-topo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1c9c43;
 }
 
-/* Imagem da atração */
-#lista-atracoes li img {
-  margin-top: 10px;
-  border-radius: 8px;
-  width: 100%;
-  max-height: 160px;
-  object-fit: cover;
-  border: 1px solid #333;
+/* Ordem */
+#card-ordem {
+    font-size: 15px;
+    color: #979797;
 }
 
-/* Texto extra */
-#lista-atracoes li span,
-#lista-atracoes li p {
-  font-size: 14px;
-  color: #ccc;
-  line-height: 1.4;
+/* Descrição */
+#card-descricao {
+    font-size: 16px;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+/* Principal */
+#card-principal {
+    font-size: 14px;
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Exibições */
+#card-exibicoes {
+    font-size: 14px;
+    color: #fff;
+}
+
+/* Tags */
+#card-tags {
+    font-size: 14px;
+    color: #00bfff;
+}
+
+/* Botão excluir */
+.excluir {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
 }

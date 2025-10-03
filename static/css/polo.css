@@ -12,7 +12,7 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
     position: fixed;
     color: white;
@@ -152,7 +152,6 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
-<<<<<<< HEAD
 }
 
 /* Card */
@@ -226,8 +225,7 @@ main {
 #card-ismultilocal {
     font-size: 13px;
     color: #66ff99;
-=======
->>>>>>> upstream/main
+
 }
 
 /* Card */

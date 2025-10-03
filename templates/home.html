@@ -9,7 +9,7 @@
   <body>
     <div id="admin-container">
       <aside> 
-        <a href="home.html">
+        <a href="/">
           <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
         <ul>
@@ -26,8 +26,70 @@
     <img id="bandeirinhas" src="../static/assets/bandeirinhas.png" alt="">
 
       <main id="main-content">
-        <p>Bem-vindo ao painel administrativo!</p>
-        <input type="text" id="searchInput" placeholder="Pesquisar..." />
+        <ul class="container-cards">
+          <li class="card">
+            <h2>{{total_atracoes}}</h2>
+            <p>Atrações</p>
+          </li>
+          <li class="card">
+            <h2>{{total_equipes}}</h2>
+            <p>Equipes</p>
+          </li>
+          <li class="card">
+            <h2>{{total_eventos}}</h2>
+            <p>Eventos</p>
+          </li>
+          <li class="card">
+            <h2>{{total_exibicoes}}</h2>
+            <p>Exibicoes</p>
+          </li>
+          <li class="card">
+            <h2>{{total_locais}}</h2>
+            <p>Locais</p>
+          </li>
+          <li class="card">
+            <h2>{{total_polos}}</h2>
+            <p>Polos</p>
+          </li>
+          <li class="card">
+            <h2>{{total_tags}}</h2>
+            <p>Tags</p>
+          </li>
+        </ul>
+
+        <h1 id="titulo-main">Bem-Vindo ao painel administrativo!</h1>
+        <p id="Subtitulo">Aqui você dá vida ao nosso app!</p>
+        <p id="paragrafo-main"></p>
+
+        <h1 id="titulo-instrucoes">Instruções de Uso do Painel Administrativo</h1>
+
+
+        <ul id="lista-instrucoes">
+          <li id="item-instrucao">
+            <h2 id="titulo-itens">1. Polos:</h2>
+            
+            <p> Não é possível excluir um polo que esteja vinculado a uma atração ou exibição. <br>
+             Caso precise excluir, primeiro remova ou altere os vínculos existentes.</p>
+          </li>  
+          <li id="item-instrucao">
+            <h2 id="titulo-itens">2. Tags:</h2>
+            
+            <p> Não é permitido excluir uma tag que esteja em uso em atrações, locais ou exibições. <br>
+             Antes de excluir, verifique se a tag não está associada a nenhum registro.</p>
+          </li>
+          <li id="item-instrucao">
+            <h2 id="titulo-itens">3. Atrações, Equipes e Exibições:</h2>
+            
+            <p> Podem ser excluídas normalmente, desde que não estejam vinculadas a outros registros obrigatórios. <br>
+             A exclusão é permanente — revise antes de confirmar.</p>
+          </li>
+          <li id="item-instrucao">
+            <h2 id="titulo-itens">4. Exibições:</h2>
+            
+            <p>Caso o polo for multi local não pode por nem endereço nem longitude e latitude.<br>
+             Antes de enviar, verifique se os campos citados estão vazios. </p>
+          </li>
+        </ul>
       </main>
 
   </body>

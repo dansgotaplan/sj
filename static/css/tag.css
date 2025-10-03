@@ -12,7 +12,7 @@ header {
 }
 aside {
     width: 230px;
-    background-color: #08095b;
+    background: linear-gradient(135deg, #050a5b,#0b00ab);
     height: 100vh;
     position: fixed;
     color: white;
@@ -175,7 +175,3 @@ main {
     font-size: 18px;
     color: #fff;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/main

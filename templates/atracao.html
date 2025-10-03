@@ -9,17 +9,17 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="home.html">
+        <a href="/">
             <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
         </a>
         <ul>
-            <li data-section="atracao"><a href="atracao">Atração</a></li>
-            <li data-section="equipe"><a href="equipe">Equipe</a></li>
-            <li data-section="eventos"><a href="eventos">Eventos</a></li>
-            <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-            <li data-section="locais"><a href="locais">Locais</a></li>
-            <li data-section="Polos"><a href="polo">Polos</a></li>
-            <li data-section="Tags"><a href="tag">Tags</a></li>
+            <li><a href="atracao">Atração</a></li>
+            <li><a href="equipe">Equipe</a></li>
+            <li><a href="eventos">Eventos</a></li>
+            <li><a href="exibicao">Exibição</a></li>
+            <li><a href="locais">Locais</a></li>
+            <li><a href="polo">Polos</a></li>
+            <li><a href="tag">Tags</a></li>
         </ul>
     </aside>
 
@@ -33,26 +33,33 @@
             <!-- Lista de atrações -->
             <ul id="lista-atracoes">
                 {% for atracao in atracoes %}
-                    <li>
-                        <strong>{{ atracao.nome }}</strong> (Ordem: {{ atracao.ordem }})<br>
-                        {{ atracao.descricao }}<br>
-                        <img src="{{ atracao.urlimagem }}" alt="{{ atracao.nome }}" width="150"><br>
-                        Principal: {{ 'Sim' if atracao.principal else 'Não' }}<br>
-                        Exibições: 
-                        {% for ex in atracao.exibicoes %}
-                            {{ ex.dia }} - {{ ex.endereco }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}<br>
-                        Tags:
-                        {% for tag in atracao.tags %}
-                            {{ tag.nome }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}<br>
-                        
-                        <!-- Botão de excluir -->
+                <li id="card-atracao">
+                    <img id="card-imagem" src="{{ atracao.urlimagem }}" alt="{{ atracao.nome }}">
+                    
+                    <div id="card-info">
+                        <div id="card-topo">{{ atracao.nome }}</div>
+                        <div id="card-ordem">Ordem: {{ atracao.ordem }}</div>
+                        <div id="card-descricao">{{ atracao.descricao }}</div>
+                        <div id="card-principal">Principal: {{ 'Sim' if atracao.principal else 'Não' }}</div>
+                        <div id="card-exibicoes">
+                            <strong>Exibições:</strong>
+                            {% for ex in atracao.exibicoes %}
+                                {{ ex.dia }} - {{ ex.endereco }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div id="card-tags">
+                            <strong>Tags:</strong>
+                            {% for tag in atracao.tags %}
+                                {{ tag.nome }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+
                         <a href="{{ url_for('excluir_atracao', atracao_id=atracao.code) }}" 
                            onclick="return confirm('Tem certeza que deseja excluir esta atração?');">
                             <button class="excluir">Excluir</button>
                         </a>
-                    </li>
+                    </div>
+                </li>
                 {% endfor %}
             </ul>
 

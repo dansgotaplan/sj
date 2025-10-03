@@ -19,10 +19,25 @@ def load_user(name):
 
 @app.route("/")
 def index():
-    if current_user.is_authenticated:
-        return render_template('home.html')
-    else:
-        return render_template('home.html')
+    with getdb() as session:
+        total_atracoes = session.query(Atracao).count()
+        total_equipes = session.query(Equipe).count()
+        total_eventos = session.query(Evento).count()
+        total_exibicoes = session.query(Exibicao).count()
+        total_locais = session.query(Locais).count()
+        total_polos = session.query(Polo).count()
+        total_tags = session.query(Tag).count()
+
+    return render_template(
+        "home.html",
+        total_atracoes=total_atracoes,
+        total_equipes=total_equipes,
+        total_eventos=total_eventos,
+        total_exibicoes=total_exibicoes,
+        total_locais=total_locais,
+        total_polos=total_polos,
+        total_tags=total_tags,
+    )
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
