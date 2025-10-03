@@ -25,6 +25,10 @@ window.addEventListener("click", (e) => {
     }
 });
 
+// 🚨 Captura o submit e envia AJAX
+formEvento.addEventListener("submit", function(e) {
+    e.preventDefault();
+
     const dados = {
         handle: formEvento.handle.value,
         nome: formEvento.nome.value,
@@ -38,3 +42,21 @@ window.addEventListener("click", (e) => {
         urlimagem: formEvento.urlimagem.value
     };
 
+    fetch("/eventos", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert("Evento cadastrado com sucesso!");
+            window.location.reload();
+        } else {
+            alert("Erro: " + result.error);
+        }
+    })
+    .catch(error => console.error("Erro:", error));
+});
