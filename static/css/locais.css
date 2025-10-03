@@ -14,7 +14,7 @@ aside {
     width: 230px;
     background-color: #08095b;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     color: white;
     padding-top: 35px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -145,3 +145,76 @@ main {
   flex: 1;
 }
 
+#lista-locais {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#card-locais {
+    background: #1c1c1c;
+    border: 2px solid #3a3a3a;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+#card-topo {
+
+    align-items: center;
+    font-size: 35px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+#card-info {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+}
+#card-imagem {
+
+    width: 21%;
+    height: auto;
+    border-radius: 10px 0px 0px 10px;
+}
+#card-handle{
+    font-size: 13px;
+    color: #979797;
+}
+#card-descricao {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ddd;
+    word-break: break-word;
+}
+#card-tags {
+    font-size: 15px;
+    color: #979797;
+}
+#dias-horario {
+    font-size: 15px;
+    color: #ddd;
+    display: flex;
+    flex-direction: row;
+}
+#card-dias {
+    margin-right: 50px;
+}
+#endereco-local {
+    font-size: 15px;
+    color: #ddd;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+}
+#card-endereco {
+    margin-right: 45px;
+}
+#card-icone {
+    margin-left: 20px;
+}

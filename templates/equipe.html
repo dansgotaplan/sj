@@ -33,12 +33,18 @@
             <!-- Lista de integrantes -->
             <ul id="lista-equipe">
                 {% for integrante in equipes %}
-                    <li>
-                        <strong>{{ integrante.nome }}</strong> (Turma: {{ integrante.turma }})<br>
-                        E-mail: {{ integrante.email }}<br>
-                        Função: {{ integrante.funcao }}<br>
-                        Ano: {{ integrante.ano }}<br>
-                        <img src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
+                    <li id="card-equipe">
+                        <img  id="card-imagem" src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
+                        <div id="card-info">
+                            <div id="card-topo">
+
+                                <strong>{{ integrante.nome }}</strong> 
+                                <label id="card-turma">(Turma: {{ integrante.turma }})</label><br>
+                            </div>
+                            <label id="card-funcao">Função: {{ integrante.funcao }}</label><br>
+                            <label id="card-email">E-mail: {{ integrante.email }}</label><br>
+                        </div>
+                        <div id="card-ano">{{ integrante.ano }}</div><br>
                     </li>
                 {% endfor %}
             </ul>

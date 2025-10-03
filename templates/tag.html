@@ -30,9 +30,9 @@
             </div>
 
             <!-- LISTA DE TAGS -->
-            <ul>
+            <ul id="lista-tags">
               {% for tag in tags %}
-                <li><b>{{ tag.nome }}</b> (handle: {{ tag.handle }})</li>
+                <li id="card-tags"><b id="card-nome">{{ tag.nome }}</b> <b id="card-handle">(handle: {{ tag.handle }})</b></li>
               {% endfor %}
             </ul>
 
