@@ -45,7 +45,9 @@
                         Tags: 
                         {% for t in local.tags_names %}
                             {{ t }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
+                        {% endfor %}<br>
+                        <!-- Botão de excluir -->
+                        <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
                     </li>
                 {% endfor %}
             </ul>

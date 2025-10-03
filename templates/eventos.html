@@ -40,6 +40,9 @@
                         {{ evento.endereco }}<br>
                         Latitude: {{ evento.latitude }}, Longitude: {{ evento.longitude }}<br>
                         <img src="{{ evento.urlimagem }}" alt="{{ evento.nome }}" width="150"><br>
+                        <form method="GET" action="/eventos/excluir/{{ evento.code }}" style="display:inline;">
+                            <button type="submit">Excluir</button>
+                        </form>
                     </li>
                 {% endfor %}
             </ul>
@@ -48,7 +51,7 @@
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <form id="eventoForm" method="POST" action="/evento">
+                    <form id="eventoForm" method="POST" action="/eventos">
                         <div id="inputs-container">
                             <input type="text" name="handle" placeholder="Handle" required><br><br>
                             <input type="text" name="nome" placeholder="Nome" required><br><br>

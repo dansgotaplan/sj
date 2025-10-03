@@ -94,6 +94,24 @@ def atracao():
     tags = Tag.getall_dict()
     return render_template('atracao.html', atracoes=atracoes, exibicoes=exibicoes, tags=tags)
 
+@app.route('/atracao/excluir/<int:atracao_id>', methods=['GET'])
+#@login_required
+def excluir_atracao(atracao_id):
+    with getdb() as db:
+        atracao = db.query(Atracao).get(atracao_id)
+        if not atracao:
+            return "Atração não encontrada", 404
+
+        # Remove vínculos com Exibições e Tags
+        atracao.exibicoes = []
+        atracao.tags = []
+
+        # Exclui a atração
+        db.delete(atracao)
+        db.commit()
+
+    return redirect(url_for('atracao'))
+
 
 @app.route('/equipe', methods = ['GET', 'POST'])
 def equipe():
@@ -118,6 +136,18 @@ def equipe():
 
     equipes = Equipe.getall_dict()
     return render_template('equipe.html', equipes=equipes)
+
+@app.route('/equipe/excluir/<int:equipe_id>', methods=['GET'])
+#@login_required
+def excluir_equipe(equipe_id):
+    with getdb() as db:
+        integrante = db.query(Equipe).get(equipe_id)
+        if not integrante:
+            return "Integrante não encontrado", 404
+
+        db.delete(integrante)
+        db.commit()
+    return redirect(url_for('equipe'))
 
 @app.route('/eventos', methods=['GET', 'POST'])
 # @login_required   # se quiser exigir login, descomenta
@@ -158,6 +188,19 @@ def evento():
     eventos = Evento.getall_dict()
     return render_template('eventos.html', eventos=eventos)
 
+@app.route('/eventos/excluir/<int:evento_id>', methods=['GET'])
+#@login_required
+def excluir_evento(evento_id):
+    with getdb() as db:
+        evento = db.query(Evento).get(evento_id)
+        if not evento:
+            return "Evento não encontrado", 404
+
+        db.delete(evento)
+        db.commit()
+    return redirect(url_for('evento'))
+
+
 
 @app.route('/exibicao', methods=['GET', 'POST'])
 def exibicao():
@@ -183,6 +226,21 @@ def exibicao():
 
     return render_template('exibicao.html', exibicoes=exibicoes, polos=polos)
 
+@app.route('/exibicao/excluir/<int:exibicao_id>', methods=['GET'])
+#@login_required
+def excluir_exibicao(exibicao_id):
+    with getdb() as db:
+        exibicao = db.query(Exibicao).get(exibicao_id)
+        if not exibicao:
+            return "Exibição não encontrada", 404
+
+        # opcional: verificar vínculos com atrações
+        if exibicao.atracoes:
+            return "Não é possível excluir uma exibição vinculada a atrações.", 400
+
+        db.delete(exibicao)
+        db.commit()
+    return redirect(url_for('exibicao'))
 
 
 
@@ -223,6 +281,23 @@ def locais():
     tags = Tag.getall_dict()
     return render_template('locais.html', locais=locais, tags=tags)
 
+@app.route('/locais/excluir/<int:local_id>', methods=['GET'])
+#@login_required
+def excluir_local(local_id):
+    with getdb() as db:
+        local = db.query(Locais).get(local_id)
+        if not local:
+            return "Local não encontrado", 404
+
+        # Remove apenas os vínculos com tags (não exclui as tags)
+        local.tags = []
+
+        # Exclui o local
+        db.delete(local)
+        db.commit()
+
+    return redirect(url_for('locais'))
+
 
 @app.route('/polo', methods=['GET', 'POST'])
 def polo():
@@ -255,6 +330,19 @@ def polo():
 
     polos = Polo.getall_dict()
     return render_template('polo.html', polos=polos)
+
+# Excluir Polo
+@app.route('/polo/excluir/<int:polo_id>', methods=['GET'])
+#@login_required
+def excluir_polo(polo_id):
+    with getdb() as db:
+        polo = db.query(Polo).get(polo_id)
+        if not polo:
+            return "Polo não encontrado", 404
+        db.delete(polo)
+        db.commit()
+    return redirect(url_for('polo'))
+
 
 
 @app.route('/pessoa', methods = ['GET', 'POST'])
@@ -293,6 +381,23 @@ def tag():
 
     tags = Tag.getall_dict()
     return render_template('tag.html', tags=tags)
+
+@app.route('/tag/excluir/<int:tag_id>', methods=['GET'])
+#@login_required
+def excluir_tag(tag_id):
+    with getdb() as db:
+        tag = db.query(Tag).get(tag_id)
+        if not tag:
+            return "Tag não encontrada", 404
+
+        # verifica vinculo com locais ou atrações
+        if tag.locais or tag.atracoes:
+            return "Não é possível excluir uma tag vinculada a locais ou atrações.", 400
+
+        db.delete(tag)
+        db.commit()
+    return redirect(url_for('tag'))
+
 
 
 @app.route('/usuario', methods = ['GET', 'POST'])

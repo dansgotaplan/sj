@@ -40,6 +40,9 @@
                         Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}<br>
                         Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}<br>
                         <img src="{{ polo.urlimagem }}" alt="{{ polo.nome }}" width="150"><br>
+
+                        <!-- Botão de excluir -->
+                        <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
                     </li>
                 {% endfor %}
             </ul>

@@ -38,7 +38,10 @@
                         E-mail: {{ integrante.email }}<br>
                         Função: {{ integrante.funcao }}<br>
                         Ano: {{ integrante.ano }}<br>
-                        <img src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
+                        <img src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150"><br>
+                        <form method="GET" action="/equipe/excluir/{{ integrante.code }}" style="display:inline;">
+                            <button type="submit">Excluir</button>
+                        </form>
                     </li>
                 {% endfor %}
             </ul>

@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="../static/css/tag.css">
 </head>
 <body>
-     <div id="admin-container">
-        <aside>
-          <a href="home.html">
+<div id="admin-container">
+    <aside>
+        <a href="home.html">
             <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-          </a>
-          <ul>
+        </a>
+        <ul>
             <li><a href="/atracao">Atração</a></li>
             <li><a href="/equipe">Equipe</a></li>
             <li><a href="/eventos">Eventos</a></li>
@@ -20,20 +20,25 @@
             <li><a href="/locais">Locais</a></li>
             <li><a href="/polo">Polos</a></li>
             <li><a href="/tag">Tags</a></li>
-          </ul>
-        </aside>
-        <main>
-          <div id="gerenciador-tags">
+        </ul>
+    </aside>
+    <main>
+        <div id="gerenciador-tags">
             <div id="topo">
-              <h1>Tags:</h1>
-              <button id="adicionar">Adicionar tag</button>
+                <h1>Tags:</h1>
+                <button id="adicionar">Adicionar tag</button>
             </div>
 
             <!-- LISTA DE TAGS -->
             <ul>
-              {% for tag in tags %}
-                <li><b>{{ tag.nome }}</b> (handle: {{ tag.handle }})</li>
-              {% endfor %}
+                {% for tag in tags %}
+                    <li>
+                        <b>{{ tag.nome }}</b> (handle: {{ tag.handle }})
+                        <form method="GET" action="/tag/excluir/{{ tag.code }}" style="display:inline;">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </li>
+                {% endfor %}
             </ul>
 
             <!-- MODAL -->
@@ -41,20 +46,20 @@
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
                     <form id="tagForm">
-                      <div id="inputs-container">
-                        <input type="text" name="handle" placeholder="Handle" required><br><br>
-                        <input type="text" name="nome" placeholder="Nome" required><br><br>
-                      </div>
-                      <div class="buttons">
-                          <button type="button" id="cancelar">Cancelar</button>
-                          <button type="submit" id="salvar">Salvar</button>
-                      </div>
+                        <div id="inputs-container">
+                            <input type="text" name="handle" placeholder="Handle" required><br><br>
+                            <input type="text" name="nome" placeholder="Nome" required><br><br>
+                        </div>
+                        <div class="buttons">
+                            <button type="button" id="cancelar">Cancelar</button>
+                            <button type="submit" id="salvar">Salvar</button>
+                        </div>
                     </form>
                 </div>
             </div>
-          </div>
-        </main>
-     </div>
-     <script src="../static/scripts/tag.js"></script>
+        </div>
+    </main>
+</div>
+<script src="../static/scripts/tag.js"></script>
 </body>
 </html>

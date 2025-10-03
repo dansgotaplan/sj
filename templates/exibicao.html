@@ -39,7 +39,8 @@
                         Dia: {{ exibicao.dia }}<br>
                         Horário: {{ exibicao.horario }}<br>
                         Endereço: {{ exibicao.endereco }}<br>
-                        Latitude: {{ exibicao.latitude }}, Longitude: {{ exibicao.longitude }}
+                        Latitude: {{ exibicao.latitude }}, Longitude: {{ exibicao.longitude }}<br>
+                        <button class="excluir" data-id="{{ exibicao.code }}">Excluir</button>
                     </li>
                 {% endfor %}
             </ul>
@@ -51,14 +52,12 @@
                     <form id="exibicaoForm" method="POST" action="/exibicao">
                         <div id="inputs-container">
                             <input type="number" name="ordem" placeholder="Ordem" required><br><br>
-                            
                             <select name="fk" required>
                                 <option value="">Selecione o Polo</option>
                                 {% for polo in polos %}
                                     <option value="{{ polo.code }}">{{ polo.nome }}</option>
                                 {% endfor %}
                             </select><br><br>
-                            
                             <input type="date" name="dia" required><br><br>
                             <input type="time" name="horario" required><br><br>
                             <input type="text" name="endereco" placeholder="Endereço" required><br><br>

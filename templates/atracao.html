@@ -45,7 +45,13 @@
                         Tags:
                         {% for tag in atracao.tags %}
                             {{ tag.nome }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
+                        {% endfor %}<br>
+                        
+                        <!-- Botão de excluir -->
+                        <a href="{{ url_for('excluir_atracao', atracao_id=atracao.code) }}" 
+                           onclick="return confirm('Tem certeza que deseja excluir esta atração?');">
+                            <button class="excluir">Excluir</button>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
