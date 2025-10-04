@@ -128,41 +128,51 @@ def excluir_atracao(atracao_id):
     return redirect(url_for('atracao'))
 
 
-@app.route('/equipe', methods = ['GET', 'POST'])
+@app.route('/equipe', methods=['GET', 'POST'])
 def equipe():
     if request.method == 'POST':
-        nome = request.form['nome']
-        turma = request.form['turma']
-        email = request.form['email']
-        funcao = request.form['funcao']  # capturando função
-        ano = request.form['ano']
-        urlimagem = request.form['urlimagem']
-
-        newequipe = Equipe.create(
-            nome=nome,
-            turma=turma,
-            email=email,
-            funcao=funcao, 
-            ano=ano,
-            urlimagem=urlimagem
+        data = request.form
+        Equipe.create(
+            nome=data['nome'],
+            turma=data['turma'],
+            email=data['email'],
+            funcao=data.get('funcao'),
+            ano=data['ano'],
+            urlimagem=data.get('urlimagem')
         )
-        
         return redirect(url_for('equipe'))
 
     equipes = Equipe.getall_dict()
     return render_template('equipe.html', equipes=equipes)
 
 @app.route('/equipe/excluir/<int:equipe_id>', methods=['GET'])
-#@login_required
 def excluir_equipe(equipe_id):
     with getdb() as db:
         integrante = db.query(Equipe).get(equipe_id)
         if not integrante:
             return "Integrante não encontrado", 404
-
         db.delete(integrante)
         db.commit()
     return redirect(url_for('equipe'))
+
+@app.route('/equipe/editar/<int:equipe_id>', methods=['PUT'])
+def editar_equipe(equipe_id):
+    data = request.get_json()
+    with getdb() as db:
+        integrante = db.query(Equipe).get(equipe_id)
+        if not integrante:
+            return jsonify({"success": False, "error": "Integrante não encontrado"}), 404
+
+        integrante.nome = data['nome']
+        integrante.turma = data['turma']
+        integrante.email = data['email']
+        integrante.funcao = data['funcao']
+        integrante.ano = data['ano']
+        integrante.urlimagem = data['urlimagem']
+
+        db.commit()
+    return jsonify({"success": True})
+
 
 @app.route('/eventos', methods=['GET', 'POST'])
 # @login_required   # se quiser exigir login, descomenta
@@ -215,6 +225,30 @@ def excluir_evento(evento_id):
         db.commit()
     return redirect(url_for('evento'))
 
+@app.route('/eventos/<int:evento_id>', methods=['PUT'])
+def editar_evento(evento_id):
+    data = request.get_json()
+    try:
+        with getdb() as db:
+            evento = db.query(Evento).get(evento_id)
+            if not evento:
+                return jsonify({"success": False, "error": "Evento não encontrado"}), 404
+
+            evento.handle = data['handle']
+            evento.nome = data['nome']
+            evento.descricao = data['descricao']
+            evento.inicio = data['inicio']
+            evento.fim = data['fim']
+            evento.horario = data['horario']
+            evento.endereco = data['endereco']
+            evento.latitude = float(data['latitude'])
+            evento.longitude = float(data['longitude'])
+            evento.urlimagem = data['urlimagem']
+
+            db.commit()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
 
 
 @app.route('/exibicao', methods=['GET', 'POST'])
@@ -256,7 +290,6 @@ def excluir_exibicao(exibicao_id):
         db.delete(exibicao)
         db.commit()
     return redirect(url_for('exibicao'))
-
 
 
 @app.route('/locais', methods=['GET', 'POST'])
@@ -313,6 +346,44 @@ def excluir_local(local_id):
 
     return redirect(url_for('locais'))
 
+@app.route("/locais/<int:local_id>", methods=["PUT"])
+def editar_local(local_id):
+    dados = request.get_json()
+    if not dados:
+        return jsonify({"success": False, "error": "Dados não enviados"}), 400
+
+    try:
+        with getdb() as session:
+            local = session.query(Locais).filter_by(code=local_id).first()
+            if not local:
+                return jsonify({"success": False, "error": "Local não encontrado"}), 404
+
+            # Atualiza campos
+            local.handle = dados.get("handle", local.handle)
+            local.nome = dados.get("nome", local.nome)
+            local.descricao = dados.get("descricao", local.descricao)
+            local.dias = dados.get("dias", local.dias)
+            local.inicio = dados.get("inicio", local.inicio)
+            local.fim = dados.get("fim", local.fim)
+            local.endereco = dados.get("endereco", local.endereco)
+            local.latitude = dados.get("latitude", local.latitude)
+            local.longitude = dados.get("longitude", local.longitude)
+            local.urlimage = dados.get("urlimage", local.urlimage)
+            local.urlicone = dados.get("urlicone", local.urlicone)
+
+            # Atualiza tags
+            if "tags" in dados:
+                local.tags.clear()
+                for tag_id in dados["tags"]:
+                    tag = session.query(Tag).filter_by(code=tag_id).first()
+                    if tag:
+                        local.tags.append(tag)
+
+            session.commit()
+            return jsonify({"success": True, "message": "Local atualizado com sucesso"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
 
 @app.route('/polo', methods=['GET', 'POST'])
 def polo():
@@ -358,6 +429,30 @@ def excluir_polo(polo_id):
         db.commit()
     return redirect(url_for('polo'))
 
+@app.route('/polo/<int:polo_id>', methods=['PUT'])
+def editar_polo(polo_id):
+    data = request.get_json()
+    try:
+        with getdb() as db:
+            polo = db.query(Polo).get(polo_id)
+            if not polo:
+                return jsonify({"success": False, "error": "Polo não encontrado"}), 404
+
+            polo.handle = data['handle']
+            polo.nome = data['nome']
+            polo.descricao = data['descricao']
+            polo.inicio = data['inicio']
+            polo.fim = data['fim']
+            polo.endereco = data['endereco']
+            polo.latitude = data['latitude']
+            polo.longitude = data['longitude']
+            polo.urlimagem = data['urlimagem']
+            polo.ismultilocal = data['ismultilocal']
+
+            db.commit()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
 
 
 @app.route('/pessoa', methods = ['GET', 'POST'])
@@ -381,7 +476,6 @@ def pessoa():
     return render_template('pessoa.html', pessoas=pessoas)
 
 @app.route('/tag', methods=['GET', 'POST'])
-#@login_required
 def tag():
     if request.method == 'POST':
         data = request.get_json()
@@ -397,21 +491,40 @@ def tag():
     tags = Tag.getall_dict()
     return render_template('tag.html', tags=tags)
 
+
+@app.route('/tag/<int:tag_id>', methods=['PUT'])
+def editar_tag(tag_id):
+    data = request.get_json()
+    try:
+        with getdb() as db:
+            tag = db.query(Tag).get(tag_id)
+            if not tag:
+                return jsonify({"success": False, "error": "Tag não encontrada"}), 404
+
+            tag.handle = data['handle']
+            tag.nome = data['nome']
+            db.commit()
+
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
+
+
 @app.route('/tag/excluir/<int:tag_id>', methods=['GET'])
-#@login_required
 def excluir_tag(tag_id):
     with getdb() as db:
         tag = db.query(Tag).get(tag_id)
         if not tag:
             return "Tag não encontrada", 404
 
-        # verifica vinculo com locais ou atrações
+        # verifica vínculo com locais ou atrações
         if tag.locais or tag.atracoes:
             return "Não é possível excluir uma tag vinculada a locais ou atrações.", 400
 
         db.delete(tag)
         db.commit()
     return redirect(url_for('tag'))
+
 
 
 

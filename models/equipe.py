@@ -10,4 +10,4 @@ class Equipe(BaseModel):
     email = Column(String(255), nullable=False)
     funcao = Column(String(255))
     ano = Column(String(50), nullable=False)
-    urlimagem = Column(String(255))
+    urlimagem = Column(String(1000))

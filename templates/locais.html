@@ -9,17 +9,15 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="/">
-            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
+        <a href="/"><img id="logo" src="../static/assets/logosj.png" alt="Logo SJ"></a>
         <ul>
-            <li data-section="atracao"><a href="atracao">Atração</a></li>
-            <li data-section="equipe"><a href="equipe">Equipe</a></li>
-            <li data-section="eventos"><a href="eventos">Eventos</a></li>
-            <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-            <li data-section="locais"><a href="locais">Locais</a></li>
-            <li data-section="Polos"><a href="polo">Polos</a></li>
-            <li data-section="Tags"><a href="tag">Tags</a></li>
+            <li><a href="atracao">Atração</a></li>
+            <li><a href="equipe">Equipe</a></li>
+            <li><a href="eventos">Eventos</a></li>
+            <li><a href="exibicao">Exibição</a></li>
+            <li><a href="locais">Locais</a></li>
+            <li><a href="polo">Polos</a></li>
+            <li><a href="tag">Tags</a></li>
         </ul>
     </aside>
 
@@ -30,36 +28,30 @@
                 <button id="adicionar">Adicionar local</button>
             </div>
 
-            <!-- Lista de locais em cards -->
             <ul id="lista-locais">
                 {% for local in locais %}
                     <li id="card-locais">
                         <img id="card-imagem" src="{{ local.urlimage }}" alt="{{ local.nome }}">
-
                         <div id="card-info">
                             <div id="card-topo">
-                                <strong>{{ local.nome }}</strong> 
+                                <strong>{{ local.nome }}</strong>
                                 <label id="card-dias">(Início: {{ local.inicio }} - Fim: {{ local.fim }})</label>
                             </div>
-
                             <label id="card-descricao">{{ local.descricao }}</label>
                             <label id="card-endereco">{{ local.endereco }}</label>
                             <label id="card-local">Latitude: {{ local.latitude }}, Longitude: {{ local.longitude }}</label>
-
                             <label id="card-tags">Tags: 
-                                {% for t in local.tags_names %}
-                                    {{ t }}{% if not loop.last %}, {% endif %}
-                                {% endfor %}
+                                {% for t in local.tags_names %}{{ t }}{% if not loop.last %}, {% endif %}{% endfor %}
                             </label>
-                            <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
+                            <div class="card-buttons">
+                                <a href="#" class="editar" data-id="{{ local.code }}">Editar</a>
+                                <a href="{{ url_for('excluir_local', local_id=local.code) }}" class="excluir" onclick="return confirm('Tem certeza que deseja excluir este local?');">Excluir</a>
+                            </div>
                         </div>
-
-                        <!-- Botão de excluir -->
                     </li>
                 {% endfor %}
             </ul>
 
-            <!-- Modal de Adição -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
@@ -67,9 +59,9 @@
                         <input type="text" name="handle" placeholder="Handle" required><br><br>
                         <input type="text" name="nome" placeholder="Nome" required><br><br>
                         <textarea name="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
-                        <input type="text" name="dias" placeholder="Dias de funcionamento" required><br><br>
-                        <input type="time" name="inicio" placeholder="Horário de início" required><br><br>
-                        <input type="time" name="fim" placeholder="Horário de fim" required><br><br>
+                        <input type="text" name="dias" placeholder="Dias de funcionamento"><br><br>
+                        <input type="time" name="inicio" placeholder="Horário de início"><br><br>
+                        <input type="time" name="fim" placeholder="Horário de fim"><br><br>
                         <input type="text" name="endereco" placeholder="Endereço"><br><br>
                         <input type="number" step="0.00001" name="latitude" placeholder="Latitude"><br><br>
                         <input type="number" step="0.00001" name="longitude" placeholder="Longitude"><br><br>
@@ -88,7 +80,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
     </main>
 </div>

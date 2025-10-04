@@ -1,89 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polos</title>
-    <link rel="stylesheet" href="../static/css/polo.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polos</title>
+  <link rel="stylesheet" href="../static/css/polo.css">
 </head>
 <body>
 <div id="admin-container">
-    <aside>
-        <a href="/">
-            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
-        <ul>
-            <li data-section="atracao"><a href="atracao">Atração</a></li>
-            <li data-section="equipe"><a href="equipe">Equipe</a></li>
-            <li data-section="eventos"><a href="eventos">Eventos</a></li>
-            <li data-section="exibicao"><a href="exibicao">Exibição</a></li>
-            <li data-section="locais"><a href="locais">Locais</a></li>
-            <li data-section="Polos"><a href="polo">Polos</a></li>
-            <li data-section="Tags"><a href="tag">Tags</a></li>
-        </ul>
-    </aside>
+  <aside>
+    <a href="/">
+      <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
+    </a>
+    <ul>
+      <li><a href="atracao">Atração</a></li>
+      <li><a href="equipe">Equipe</a></li>
+      <li><a href="eventos">Eventos</a></li>
+      <li><a href="exibicao">Exibição</a></li>
+      <li><a href="locais">Locais</a></li>
+      <li><a href="polo">Polos</a></li>
+      <li><a href="tag">Tags</a></li>
+    </ul>
+  </aside>
 
-    <main>
-        <div id="gerenciador-polos">
-            <div id="topo">
-                <h1>Polos:</h1>
-                <button id="adicionar">Adicionar polo</button>
+  <main>
+    <div id="gerenciador-polos">
+      <div id="topo">
+        <h1>Polos:</h1>
+        <button id="adicionar" class="botao-primario">Adicionar polo</button>
+      </div>
+
+      <ul id="lista-polos">
+        {% for polo in polos %}
+          <li class="card-polo"
+              data-code="{{ polo.code }}"
+              data-handle="{{ polo.handle }}"
+              data-nome="{{ polo.nome }}"
+              data-descricao="{{ polo.descricao }}"
+              data-inicio="{{ polo.inicio }}"
+              data-fim="{{ polo.fim }}"
+              data-endereco="{{ polo.endereco }}"
+              data-latitude="{{ polo.latitude }}"
+              data-longitude="{{ polo.longitude }}"
+              data-urlimagem="{{ polo.urlimagem }}"
+              data-ismultilocal="{{ polo.ismultilocal }}">
+
+            <img id="card-imagem" src="{{ polo.urlimagem }}" alt="{{ polo.nome }}">
+            <div id="card-info">
+              <div id="card-topo">
+                <strong>{{ polo.nome }}</strong>
+                <label id="card-dias">(Início: {{ polo.inicio }} - Fim: {{ polo.fim }})</label>
+              </div>
+              <label id="card-descricao">{{ polo.descricao }}</label>
+              <label id="card-endereco">{{ polo.endereco }}</label>
+              <label id="card-local">Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}</label>
+              <label id="card-ismultilocal">Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}</label>
+
+              <div class="acoes">
+                <button class="editar botao-secundario">Editar</button>
+                <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="excluir botao-excluir"
+                   onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
+              </div>
             </div>
+          </li>
+        {% endfor %}
+      </ul>
 
-            <!-- Lista de polos com card -->
-            <ul id="lista-polos">
-                {% for polo in polos %}
-                    <li id="card-polos">
-                        <img id="card-imagem" src="{{ polo.urlimagem }}" alt="{{ polo.nome }}">
-
-                        <div id="card-info">
-                            <div id="card-topo">
-                                <strong>{{ polo.nome }}</strong> 
-                                <label id="card-dias">(Início: {{ polo.inicio }} - Fim: {{ polo.fim }})</label>
-                            </div>
-
-                            <label id="card-descricao">{{ polo.descricao }}</label>
-                            <label id="card-endereco">{{ polo.endereco }}</label>
-                            <label id="card-local">Latitude: {{ polo.latitude }}, Longitude: {{ polo.longitude }}</label>
-                            <label id="card-ismultilocal">Multilocal: {{ 'Sim' if polo.ismultilocal else 'Não' }}</label>
-                            <a href="{{ url_for('excluir_polo', polo_id=polo.code) }}" class="excluir" onclick="return confirm('Tem certeza que deseja excluir este polo?');">Excluir</a>
-                        </div>
-                        <!-- Botão de excluir -->
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <div id="modal" class="modal">
-                <div class="modal-content">
-                    <span class="fechar">&times;</span>
-                    <form id="poloForm" method="POST" action="/polo">
-                        <div id="inputs-container">
-                            <input type="text" name="handle" placeholder="Handle" required><br><br>
-                            <input type="text" name="nome" placeholder="Nome" required><br><br>
-                            <textarea name="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
-                            <input type="date" name="inicio" required><br><br>
-                            <input type="date" name="fim"><br><br>
-                            <input type="text" name="endereco" placeholder="Endereço"><br><br>
-                            <input type="number" step="0.00001" name="latitude" placeholder="Latitude"><br><br>
-                            <input type="number" step="0.00001" name="longitude" placeholder="Longitude"><br><br>
-                            <input type="url" name="urlimagem" placeholder="URL da Imagem"><br><br>
-                        </div>3
-
-                        <label>
-                            É multilocal?
-                            <input type="checkbox" name="ismultilocal">
-                        </label><br><br>
-
-                        <div class="buttons">
-                            <button type="button" id="cancelar">Cancelar</button>
-                            <button type="submit" id="salvar">Salvar</button>
-                        </div>
-                    </form>
-                </div>
+      <!-- Modal -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="fechar">&times;</span>
+          <h2 id="modalTitulo">Adicionar Polo</h2>
+          <form id="poloForm">
+            <div id="inputs-container">
+              <input type="text" name="handle" placeholder="Handle" required><br><br>
+              <input type="text" name="nome" placeholder="Nome" required><br><br>
+              <textarea name="descricao" placeholder="Descrição" rows="4" cols="50"></textarea><br><br>
+              <input type="date" name="inicio" required><br><br>
+              <input type="date" name="fim" required><br><br>
+              <input type="text" name="endereco" placeholder="Endereço"><br><br>
+              <input type="number" step="0.00001" name="latitude" placeholder="Latitude"><br><br>
+              <input type="number" step="0.00001" name="longitude" placeholder="Longitude"><br><br>
+              <input type="url" name="urlimagem" placeholder="URL da Imagem"><br><br>
+              <label>
+                É multilocal?
+                <input type="checkbox" name="ismultilocal">
+              </label><br><br>
             </div>
-
+            <div class="buttons">
+              <button type="button" id="cancelar" class="botao-cancelar">Cancelar</button>
+              <button type="submit" id="salvar" class="botao-primario">Salvar</button>
+            </div>
+          </form>
         </div>
-    </main>
+      </div>
+    </div>
+  </main>
 </div>
 
 <script src="../static/scripts/polo.js"></script>

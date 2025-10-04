@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
             <li><a href="/tag">Tags</a></li>
         </ul>
     </aside>
+
     <main>
         <div id="gerenciador-tags">
             <div id="topo">
@@ -32,11 +33,15 @@
             <!-- LISTA DE TAGS -->
             <ul id="lista-tags">
                 {% for tag in tags %}
-                    <li id="card-tags">
-                        <b id="card-nome">{{ tag.nome }}</b> <b id="card-handle">(handle: {{ tag.handle }}) </b>
-                        <form method="GET" action="/tag/excluir/{{ tag.code }}" style="display:inline;">
-                            <button type="submit" class="excluir">Excluir</button>
-                        </form>
+                    <li id="card-tags" data-code="{{ tag.code }}" data-handle="{{ tag.handle }}" data-nome="{{ tag.nome }}">
+                        <b id="card-nome">{{ tag.nome }}</b>
+                        <b id="card-handle">(handle: {{ tag.handle }})</b>
+                        <div style="display:inline;">
+                            <button type="button" class="editar">Editar</button>
+                            <form method="GET" action="/tag/excluir/{{ tag.code }}" style="display:inline;">
+                                <button type="submit" class="excluir">Excluir</button>
+                            </form>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
@@ -45,6 +50,7 @@
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
+                    <h2 id="titulo-modal">Adicionar Tag</h2>
                     <form id="tagForm">
                         <div id="inputs-container">
                             <input type="text" name="handle" placeholder="Handle" required><br><br>

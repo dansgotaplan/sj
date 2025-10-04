@@ -9,9 +9,7 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="/">
-            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
+        <a href="/"><img id="logo" src="../static/assets/logosj.png" alt="Logo SJ"></a>
         <ul>
             <li><a href="atracao">Atração</a></li>
             <li><a href="equipe">Equipe</a></li>
@@ -37,28 +35,33 @@
                     <img src="{{ evento.urlimagem }}" alt="{{ evento.nome }}">
                     <div id="card-info">
                         <div id="card-topo">{{ evento.nome }}</div>
-                        <div id="card-datas">
+                        <div id="card-datas" 
+                             data-inicio="{{ evento.inicio }}" 
+                             data-fim="{{ evento.fim }}" 
+                             data-horario="{{ evento.horario }}">
                             Início: {{ evento.inicio }}
                             {% if evento.fim %} - Fim: {{ evento.fim }}{% endif %} |
                             Horário: {{ evento.horario }}
                         </div>
                         <div id="card-descricao">{{ evento.descricao }}</div>
                         <div id="card-local">{{ evento.endereco }}</div>
-                        <div id="card-coords">Lat: {{ evento.latitude }}, Lng: {{ evento.longitude }}</div>
+                        <div id="card-coords" data-lat="{{ evento.latitude }}" data-lng="{{ evento.longitude }}">
+                            Lat: {{ evento.latitude }}, Lng: {{ evento.longitude }}
+                        </div>
 
-                        <form method="GET" action="/eventos/excluir/{{ evento.code }}" style="margin-top:10px;">
+                        <form method="GET" action="/eventos/excluir/{{ evento.code }}" style="margin-top:10px; display:inline;">
                             <button type="submit" class="excluir">Excluir</button>
                         </form>
+                        <button class="editar" data-code="{{ evento.code }}" style="margin-left:5px;">Editar</button>
                     </div>
                 </li>
                 {% endfor %}
             </ul>
 
-            <!-- Modal de Adição -->
+            <!-- Modal de Adição/Edição -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
-                    <!-- 🚨 sem action/method -->
                     <form id="eventoForm">
                         <div id="inputs-container">
                             <input type="text" name="handle" placeholder="Handle" required><br><br>

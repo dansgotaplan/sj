@@ -9,9 +9,7 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="/">
-            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
+        <a href="/"><img id="logo" src="../static/assets/logosj.png" alt="Logo SJ"></a>
         <ul>
             <li data-section="atracao"><a href="atracao">Atração</a></li>
             <li data-section="equipe"><a href="equipe">Equipe</a></li>
@@ -33,26 +31,28 @@
             <!-- Lista de integrantes -->
             <ul id="lista-equipe">
                 {% for integrante in equipes %}
-              <li id="card-equipe">
-                        <img  id="card-imagem" src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
-                        <div id="card-info">
-                            <div id="card-topo">
-
-                                <strong>{{ integrante.nome }}</strong> 
-                                <label id="card-turma">(Turma: {{ integrante.turma }})</label><br>
-                            </div>
-                            <label id="card-funcao">Função: {{ integrante.funcao }}</label><br>
-                            <label id="card-email">E-mail: {{ integrante.email }}</label><br>
-                            <form method="GET" action="/equipe/excluir/{{ integrante.code }}" style="display:inline;">
-                                <button type="submit" class="excluir">Excluir</button>
-                            </form>
+                <li id="card-equipe">
+                    <img id="card-imagem" src="{{ integrante.urlimagem }}" alt="{{ integrante.nome }}" width="150">
+                    <div id="card-info">
+                        <div id="card-topo">
+                            <strong>{{ integrante.nome }}</strong> 
+                            <label id="card-turma">(Turma: {{ integrante.turma }})</label><br>
                         </div>
-                        <div id="card-ano">{{ integrante.ano }}</div><br>
-                    </li>
+                        <label id="card-funcao">Função: {{ integrante.funcao }}</label><br>
+                        <label id="card-email">E-mail: {{ integrante.email }}</label><br>
+                        <form method="GET" style="display:inline;">
+                            <button type="button" class="editar" data-code="{{ integrante.code }}">Editar</button>
+                        </form>
+                        <form method="GET" action="/equipe/excluir/{{ integrante.code }}" style="display:inline;">
+                            <button type="submit" class="excluir">Excluir</button>
+                        </form>
+                    </div>
+                    <div id="card-ano">{{ integrante.ano }}</div><br>
+                </li>
                 {% endfor %}
             </ul>
 
-            <!-- Modal de Adição -->
+            <!-- Modal de Adição / Edição -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>
@@ -73,6 +73,7 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </main>
 </div>
