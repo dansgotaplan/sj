@@ -172,16 +172,19 @@ def editar_atracao(atracao_id):
 @app.route('/equipe', methods=['GET', 'POST'])
 def equipe():
     if request.method == 'POST':
-        data = request.form
-        Equipe.create(
-            nome=data['nome'],
-            turma=data['turma'],
-            email=data['email'],
-            funcao=data.get('funcao'),
-            ano=data['ano'],
-            urlimagem=data.get('urlimagem')
-        )
-        return redirect(url_for('equipe'))
+        data = request.get_json()  # 👈 pega JSON enviado pelo fetch
+        try:
+            Equipe.create(
+                nome=data['nome'],
+                turma=data['turma'],
+                email=data['email'],
+                funcao=data.get('funcao'),
+                ano=data['ano'],
+                urlimagem=data.get('urlimagem')
+            )
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
 
     equipes = Equipe.getall_dict()
     return render_template('equipe.html', equipes=equipes)
