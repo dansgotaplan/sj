@@ -461,31 +461,28 @@ def editar_local(local_id):
 @app.route('/polo', methods=['GET', 'POST'])
 def polo():
     if request.method == 'POST':
-        handle = request.form['handle']
-        nome = request.form['nome']
-        descricao = request.form['descricao']
-        inicio = request.form['inicio']
-        fim = request.form['fim']
-        endereco = request.form['endereco']
-        latitude = request.form['latitude']
-        longitude = request.form['longitude']
-        ismultilocal = True if request.form.get('ismultilocal') else False
-        urlimagem = request.form['urlimagem']
+        data = request.get_json()  # <- pega JSON do JS
+        try:
+            # Converte valores numéricos
+            latitude = float(data['latitude']) if data.get('latitude') else None
+            longitude = float(data['longitude']) if data.get('longitude') else None
+            ismultilocal = bool(data.get('ismultilocal', False))
 
-        Polo.create(
-            handle=handle,
-            nome=nome,
-            descricao=descricao,
-            inicio=inicio,
-            fim=fim,
-            endereco=endereco,
-            latitude=latitude,
-            longitude=longitude,
-            ismultilocal=ismultilocal,
-            urlimagem=urlimagem
-        )
-        
-        return redirect(url_for('polo'))
+            Polo.create(
+                handle=data['handle'],
+                nome=data['nome'],
+                descricao=data['descricao'],
+                inicio=data['inicio'],
+                fim=data['fim'],
+                endereco=data['endereco'] if not ismultilocal else None,
+                latitude=latitude if not ismultilocal else None,
+                longitude=longitude if not ismultilocal else None,
+                ismultilocal=ismultilocal,
+                urlimagem=data['urlimagem']
+            )
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"success": False, "error": str(e)}), 400
 
     polos = Polo.getall_dict()
     return render_template('polo.html', polos=polos)
