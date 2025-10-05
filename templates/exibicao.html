@@ -9,9 +9,7 @@
 <body>
 <div id="admin-container">
     <aside>
-        <a href="/">
-            <img id="logo" src="../static/assets/logosj.png" alt="Logo SJ">
-        </a>
+        <a href="/"><img id="logo" src="../static/assets/logosj.png" alt="Logo SJ"></a>
         <ul>
             <li data-section="atracao"><a href="atracao">Atração</a></li>
             <li data-section="equipe"><a href="equipe">Equipe</a></li>
@@ -43,11 +41,12 @@
                         <label id="card-endereco">Endereço: {{ exibicao.endereco }}</label><br>
                         <label id="card-local">Latitude: {{ exibicao.latitude }}, Longitude: {{ exibicao.longitude }}</label> <br>   
                         <button class="excluir" data-id="{{ exibicao.code }}">Excluir</button>
+                        <button class="editar" data-id="{{ exibicao.code }}">Editar</button>
                     </li>
                 {% endfor %}
             </ul>
 
-            <!-- Modal de Adição -->
+            <!-- Modal de Adição / Edição -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>

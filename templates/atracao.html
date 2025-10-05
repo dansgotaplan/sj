@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,16 +54,30 @@
                             {% endfor %}
                         </div>
 
-                        <a href="{{ url_for('excluir_atracao', atracao_id=atracao.code) }}" 
-                           onclick="return confirm('Tem certeza que deseja excluir esta atração?');">
-                            <button type="submit" class="excluir">Excluir</button>
-                        </a>
+                        <div class="botoes-card">
+                            <button class="editar" 
+                                data-id="{{ atracao.code }}"
+                                data-handle="{{ atracao.handle }}"
+                                data-nome="{{ atracao.nome }}"
+                                data-ordem="{{ atracao.ordem }}"
+                                data-descricao="{{ atracao.descricao }}"
+                                data-urlimagem="{{ atracao.urlimagem }}"
+                                data-principal="{{ 'true' if atracao.principal else 'false' }}"
+                                data-fk="{{ atracao.exibicoes[0].code if atracao.exibicoes|length > 0 else '' }}">
+                                Editar
+                            </button>
+
+                            <a href="{{ url_for('excluir_atracao', atracao_id=atracao.code) }}" 
+                               onclick="return confirm('Tem certeza que deseja excluir esta atração?');">
+                                <button type="submit" class="excluir">Excluir</button>
+                            </a>
+                        </div>
                     </div>
                 </li>
                 {% endfor %}
             </ul>
 
-            <!-- Modal de Adição -->
+            <!-- Modal de Adição/Edição -->
             <div id="modal" class="modal">
                 <div class="modal-content">
                     <span class="fechar">&times;</span>

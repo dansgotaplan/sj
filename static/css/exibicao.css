@@ -208,3 +208,14 @@ main {
     font-weight: bold;
     margin-top: 8px;
 }
+
+.editar {
+    background-color: #01048d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
+}

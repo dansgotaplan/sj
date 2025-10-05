@@ -127,6 +127,47 @@ def excluir_atracao(atracao_id):
 
     return redirect(url_for('atracao'))
 
+@app.route("/atracao/<int:atracao_id>", methods=["PUT"])
+def editar_atracao(atracao_id):
+    data = request.get_json()
+    try:
+        with getdb() as db:
+            # usa session.get que é o padrão nas versões 1.4+
+            atracao = db.get(Atracao, atracao_id)
+            if not atracao:
+                return jsonify({"success": False, "error": "Atração não encontrada."}), 404
+
+            atracao.handle = data.get("handle")
+            atracao.nome = data.get("nome")
+            atracao.ordem = data.get("ordem")
+            atracao.descricao = data.get("descricao")
+            atracao.urlimagem = data.get("urlimagem")
+            atracao.principal = data.get("principal")
+
+            # Atualizar relações: limpa e recria
+            atracao.tags.clear()
+            atracao.exibicoes.clear()
+
+            if data.get("fk"):
+                exibicao = db.get(Exibicao, int(data["fk"]))
+                if exibicao:
+                    atracao.exibicoes.append(exibicao)
+
+            if data.get("tags"):
+                for tag_id in data["tags"]:
+                    tag = db.get(Tag, int(tag_id))
+                    if tag:
+                        atracao.tags.append(tag)
+
+            db.commit()
+        return jsonify({"success": True})
+    except Exception as e:
+        # se der erro tenta rollback (se session ainda aberta)
+        try:
+            db.rollback()
+        except:
+            pass
+        return jsonify({"success": False, "error": str(e)}), 400
 
 @app.route('/equipe', methods=['GET', 'POST'])
 def equipe():
@@ -291,6 +332,38 @@ def excluir_exibicao(exibicao_id):
         db.commit()
     return redirect(url_for('exibicao'))
 
+@app.route('/exibicao/<int:exibicao_id>', methods=['GET', 'PUT'])
+def gerenciar_exibicao(exibicao_id):
+    with getdb() as db:
+        exibicao = db.query(Exibicao).get(exibicao_id)
+        if not exibicao:
+            return jsonify({"success": False, "error": "Exibição não encontrada"}), 404
+
+        if request.method == 'GET':
+            return jsonify({
+                "ordem": exibicao.ordem,
+                "fk": exibicao.fk,
+                "dia": str(exibicao.dia),
+                "horario": str(exibicao.horario),
+                "endereco": exibicao.endereco,
+                "latitude": float(exibicao.latitude),
+                "longitude": float(exibicao.longitude)
+            })
+
+        elif request.method == 'PUT':
+            data = request.get_json()
+            try:
+                exibicao.ordem = int(data['ordem'])
+                exibicao.fk = int(data['fk'])
+                exibicao.dia = data['dia']
+                exibicao.horario = data['horario']
+                exibicao.endereco = data['endereco']
+                exibicao.latitude = float(data['latitude'])
+                exibicao.longitude = float(data['longitude'])
+                db.commit()
+                return jsonify({"success": True})
+            except Exception as e:
+                return jsonify({"success": False, "error": str(e)}), 400
 
 @app.route('/locais', methods=['GET', 'POST'])
 def locais():

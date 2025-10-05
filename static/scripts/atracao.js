@@ -3,22 +3,26 @@ const modal = document.getElementById("modal");
 const fechar = document.querySelector(".fechar");
 const cancelar = document.getElementById("cancelar");
 const formAtracao = document.getElementById("atracaoForm");
+let editando = false;
+let atracaoEditId = null;
 
-// Abrir modal
+// Abrir modal de adicionar
 btnAdicionar.addEventListener("click", () => {
+  editando = false;
+  formAtracao.reset();
+  document.getElementById("salvar").textContent = "Salvar";
   modal.style.display = "block";
 });
 
 // Fechar modal
 fechar.addEventListener("click", () => modal.style.display = "none");
 cancelar.addEventListener("click", () => modal.style.display = "none");
-window.addEventListener("click", (e) => { if(e.target === modal) modal.style.display = "none"; });
+window.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
 
-// Envio do formulário
+// Envio do formulário (POST ou PUT)
 formAtracao.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Pega todas as tags selecionadas (checkboxes)
   const selectedTags = Array.from(formAtracao.querySelectorAll('input[name="tags"]:checked'))
                             .map(el => parseInt(el.value));
 
@@ -33,9 +37,12 @@ formAtracao.addEventListener("submit", async (e) => {
     tags: selectedTags
   };
 
+  const url = editando ? `/atracao/${atracaoEditId}` : "/atracao";
+  const metodo = editando ? "PUT" : "POST";
+
   try {
-    const response = await fetch("/atracao", {
-      method: "POST",
+    const response = await fetch(url, {
+      method: metodo,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
     });
@@ -46,9 +53,28 @@ formAtracao.addEventListener("submit", async (e) => {
 
   } catch (error) {
     console.error("Erro na requisição:", error);
-    alert("Erro ao cadastrar atração.");
+    alert("Erro ao salvar atração.");
   }
 
   formAtracao.reset();
   modal.style.display = "none";
+});
+
+// ---- Função para editar ----
+document.querySelectorAll(".editar").forEach(botao => {
+  botao.addEventListener("click", () => {
+    editando = true;
+    atracaoEditId = botao.dataset.id;
+    document.getElementById("salvar").textContent = "Atualizar";
+
+    formAtracao.handle.value = botao.dataset.handle;
+    formAtracao.nome.value = botao.dataset.nome;
+    formAtracao.ordem.value = botao.dataset.ordem;
+    formAtracao.descricao.value = botao.dataset.descricao;
+    formAtracao.urlimagem.value = botao.dataset.urlimagem;
+    formAtracao.principal.checked = botao.dataset.principal === "true";
+    formAtracao.fk.value = botao.dataset.fk;
+
+    modal.style.display = "block";
+  });
 });

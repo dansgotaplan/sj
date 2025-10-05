@@ -93,7 +93,6 @@ main {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Conteúdo do modal */
 .modal-content {
   background-color: #1c1c1c;
   margin: 8% auto;
@@ -161,7 +160,7 @@ main {
   flex: 1;
 }
 
-/* LISTA DE ATRAÇÕES */
+
 #lista-atracoes {
     list-style: none;
     padding: 0;
@@ -171,7 +170,6 @@ main {
     gap: 20px;
 }
 
-/* CARD DE ATRAÇÃO */
 #card-atracao {
     background: #1c1c1c;
     border: 2px solid #3a3a3a;
@@ -189,7 +187,6 @@ main {
     box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
 
-/* Imagem */
 #card-imagem {
     width: 20%;
     height: auto;
@@ -198,7 +195,7 @@ main {
     object-fit: cover;
 }
 
-/* Informações */
+
 #card-info {
     display: flex;
     flex-direction: column;
@@ -207,48 +204,59 @@ main {
     flex: 1;
 }
 
-/* Nome da atração */
+
 #card-topo {
     font-size: 28px;
     font-weight: bold;
     color: #fff;
 }
 
-/* Ordem */
+
 #card-ordem {
     font-size: 15px;
     color: #979797;
 }
 
-/* Descrição */
+
 #card-descricao {
     font-size: 16px;
     color: #ccc;
     line-height: 1.4;
 }
 
-/* Principal */
+
 #card-principal {
     font-size: 14px;
     color: #bbb;
     font-style: italic;
 }
 
-/* Exibições */
+
 #card-exibicoes {
     font-size: 14px;
     color: #fff;
 }
 
-/* Tags */
+
 #card-tags {
     font-size: 14px;
     color: #00bfff;
 }
 
-/* Botão excluir */
+
 .excluir {
     background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.editar {
+    background-color: #01048d;
     color: white;
     border: none;
     padding: 6px 12px;

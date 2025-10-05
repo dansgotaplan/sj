@@ -1,18 +1,20 @@
-body{
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #212121;
     display: flex;
 }
+
 header {
     color: white;
     padding: 10px 0;
     text-align: center;
 }
+
 aside {
     width: 230px;
-    background: linear-gradient(135deg, #050a5b,#0b00ab);
+    background: linear-gradient(135deg, #050a5b, #0b00ab);
     height: 100vh;
     position: fixed;
     color: white;
@@ -20,42 +22,47 @@ aside {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
     z-index: 1;
-    
 }
+
 #logo {
     width: 200px;
     height: auto;
 }
+
 #logo:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
 }
+
 aside ul {
     list-style-type: none;
     padding: 0;
-    
 }
+
 aside ul li {
     padding: 10px;
     cursor: pointer;
     text-align: center;
 }
+
 aside ul li:hover {
     background-color: #000080;
     text-decoration: underline;
 }
+
 a {
-  color:white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 main {
     margin-left: 230px;
     padding: 20px;
-    color: white;     
-    flex:1;
+    color: white;
+    flex: 1;
     min-height: 100vh;
 }
+
 #topo {
     margin-top: 50px;
     display: flex;
@@ -64,6 +71,7 @@ main {
     margin-bottom: 50px;
     margin-right: 50px;
 }
+
 #adicionar {
     background-color: #1c9c43;
     color: white;
@@ -73,78 +81,88 @@ main {
     border-radius: 5px;
     font-weight: bold;
 }
+
 #modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
-  background-color: #1c1c1c;
-  margin: 8% auto;
-  padding: 20px;
-  border: 1px solid #444;
-  width: 400px; 
-  border-radius: 12px;
-  max-height: 75vh;  
-  overflow-y: auto;
+    background-color: #1c1c1c;
+    margin: 8% auto;
+    padding: 20px;
+    border: 1px solid #444;
+    width: 400px;
+    border-radius: 12px;
+    max-height: 75vh;
+    overflow-y: auto;
 }
+
 .fechar {
-  float: right;
-  font-size: 22px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
+    float: right;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
 }
+
 #inputs-container input, #inputs-container textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  background-color: #333;
-  color: white;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
 }
 
 .buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
 }
+
 .buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
 .buttons #salvar {
-  background-color: #1c9c43;
-  color: white;
-  font-weight: bold;
+    background-color: #1c9c43;
+    color: white;
+    font-weight: bold;
 }
+
 .buttons #cancelar {
-  background-color: #e50914;
-  color: white;
-  font-weight: bold;
+    background-color: #e50914;
+    color: white;
+    font-weight: bold;
 }
+
 #label-checkbox input {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 #label-checkbox {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
+
 #admin-container {
-  flex:1
+    flex: 1;
 }
-/* Lista em linhas (um card embaixo do outro) */
+
+/* Lista de polos */
 #lista-polos {
     list-style: none;
     padding: 0;
@@ -154,54 +172,56 @@ main {
     gap: 20px;
 }
 
-/* Card */
-#card-polos {
+/* Card de polos */
+.card-polo {
     background: #1c1c1c;
     border: 2px solid #3a3a3a;
     border-radius: 15px;
-
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     transition: transform 0.2s, box-shadow 0.2s;
-
-    display: flex; /* coloca imagem + info lado a lado */
+    display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* Imagem */
-#card-imagem {
-
-    width: 21%;
-    height: auto;
-    border-radius: 10px 0px 0px 10px;
+.card-polo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
 }
 
-/* Container das informações ao lado da imagem */
+/* Imagem do card */
+#card-imagem {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Informações do card */
 #card-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-}
-
-/* Topo (nome + datas) */
-#card-topo {
-
-    align-items: center;
-    font-size: 35px;
-    margin-bottom: 5px;
-    color: #fff;
-}
-#card-info {
-    padding: 15px;
+    gap: 8px;
+    padding: 10px;
     flex: 1;
 }
-/* Datas */
+
+#card-topo {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #card-dias {
     font-size: 13px;
     color: #979797;
+    margin-left: 10px;
 }
 
-/* Descrição */
 #card-descricao {
     font-size: 14px;
     line-height: 1.5;
@@ -209,98 +229,22 @@ main {
     word-break: break-word;
 }
 
-/* Endereço */
 #card-endereco {
     font-weight: bold;
     color: #fff;
 }
 
-/* Localização */
 #card-local {
     font-size: 13px;
     color: #bbb;
 }
 
-/* Multilocal */
-#card-ismultilocal {
-    font-size: 13px;
-    color: #66ff99;
-
-}
-
-/* Card */
-#card-polos {
-    background: #1c1c1c;
-    border: 2px solid #3a3a3a;
-    border-radius: 15px;
-
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-    transition: transform 0.2s, box-shadow 0.2s;
-
-    display: flex; /* coloca imagem + info lado a lado */
-    align-items: center;
-    gap: 20px;
-}
-
-/* Imagem */
-#card-imagem {
-
-    width: 21%;
-    height: auto;
-    border-radius: 10px 0px 0px 10px;
-}
-
-/* Container das informações ao lado da imagem */
-#card-info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-/* Topo (nome + datas) */
-#card-topo {
-
-    align-items: center;
-    font-size: 35px;
-    margin-bottom: 5px;
-    color: #fff;
-}
-#card-info {
-    padding: 15px;
-    flex: 1;
-}
-/* Datas */
-#card-dias {
-    font-size: 13px;
-    color: #979797;
-}
-
-/* Descrição */
-#card-descricao {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #ddd;
-    word-break: break-word;
-}
-
-/* Endereço */
-#card-endereco {
-    font-weight: bold;
-    color: #fff;
-}
-
-/* Localização */
-#card-local {
-    font-size: 13px;
-    color: #bbb;
-}
-
-/* Multilocal */
 #card-ismultilocal {
     font-size: 13px;
     color: #66ff99;
 }
 
+/* Botão excluir */
 .excluir {
     background-color: #e50914;
     color: white;
@@ -310,6 +254,16 @@ main {
     border-radius: 5px;
     font-weight: bold;
     margin-top: 8px;
-    display: inline-block; 
-    width: auto;
+}
+
+/* Botão editar */
+.editar {
+    background-color: #01048d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
 }

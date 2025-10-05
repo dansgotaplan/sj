@@ -1,18 +1,22 @@
-body{
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #212121;
     display: flex;
+    flex-wrap: wrap; /* Permite melhor adaptação em telas menores */
 }
+
 header {
     color: white;
     padding: 10px 0;
     text-align: center;
 }
+
 aside {
     width: 230px;
-    background-color: #08095b;
+    min-width: 200px;
+    background: linear-gradient(135deg, #050a5b, #0b00ab);
     height: 100vh;
     position: fixed;
     color: white;
@@ -20,20 +24,24 @@ aside {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
     z-index: 1;
-    
+    overflow-y: auto; /* Permite scroll se conteúdo exceder */
 }
+
 #logo {
-    width: 200px;
+    width: 90%;
+    max-width: 200px;
     height: auto;
+    display: block;
+    margin: 0 auto 20px;
 }
 #logo:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
 }
+
 aside ul {
     list-style-type: none;
     padding: 0;
-    
 }
 aside ul li {
     padding: 10px;
@@ -44,26 +52,29 @@ aside ul li:hover {
     background-color: #000080;
     text-decoration: underline;
 }
+
 a {
-  color:white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 main {
     margin-left: 230px;
     padding: 20px;
-    color: white;     
-    flex:1;
+    color: white;
+    flex: 1;
     min-height: 100vh;
 }
+
 #topo {
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 50px;
-    margin-right: 50px;
+    flex-wrap: wrap;
 }
+
 #adicionar {
     background-color: #1c9c43;
     color: white;
@@ -73,76 +84,88 @@ main {
     border-radius: 5px;
     font-weight: bold;
 }
+
 #modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow-y: auto;
 }
 
 .modal-content {
-  background-color: #1c1c1c;
-  margin: 8% auto;
-  padding: 20px;
-  border: 1px solid #444;
-  width: 400px; 
-  border-radius: 12px;
-  max-height: 75vh;  
-  overflow-y: auto;
+    background-color: #1c1c1c;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #444;
+    width: 90%;
+    max-width: 500px; 
+    border-radius: 12px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
+
 .fechar {
-  float: right;
-  font-size: 22px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
+    float: right;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
 }
+
 #inputs-container input, #inputs-container textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  background-color: #333;
-  color: white;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
 }
 
 .buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
+
 .buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    flex: 1 1 45%; /* cada botão ocupa 45% e quebra linha  */
 }
+
 .buttons #salvar {
-  background-color: #1c9c43;
-  color: white;
-  font-weight: bold;
+    background-color: #1c9c43;
+    color: white;
+    font-weight: bold;
 }
 .buttons #cancelar {
-  background-color: #e50914;
-  color: white;
-  font-weight: bold;
+    background-color: #e50914;
+    color: white;
+    font-weight: bold;
+}
+
+#label-checkbox {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 #label-checkbox input {
-  cursor: pointer;
+    cursor: pointer;
 }
-#label-checkbox {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-#admin-container{
-  flex: 1;
+
+#admin-container {
+    flex: 1;
 }
 
 #lista-locais {
@@ -153,71 +176,50 @@ main {
     flex-direction: column;
     gap: 20px;
 }
+
 #card-locais {
     background: #1c1c1c;
     border: 2px solid #3a3a3a;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.6);
     display: flex;
-    align-items: center;
-    gap: 20px;
-
+    flex-direction: column; /* muda para coluna em telas pequenas */
+    gap: 10px;
+    padding: 10px;
 }
-#card-topo {
 
-    align-items: center;
-    font-size: 35px;
-    margin-bottom: 5px;
-    color: #fff;
-}
 #card-info {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
-#card-imagem {
 
-    width: 21%;
+#card-imagem {
+    width: 100%;
+    max-width: 250px;
     height: auto;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px;
+    align-self: center;
 }
-#card-handle{
-    font-size: 13px;
-    color: #979797;
+
+#card-topo {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #fff;
 }
+
 #card-descricao {
     font-size: 14px;
     line-height: 1.5;
     color: #ddd;
     word-break: break-word;
 }
-#card-tags {
-    font-size: 15px;
-    color: #979797;
-}
-#dias-horario {
-    font-size: 15px;
+
+#card-tags, #dias-horario, #card-dias, #endereco-local, #card-endereco {
+    font-size: 14px;
     color: #ddd;
-    display: flex;
-    flex-direction: row;
 }
-#card-dias {
-    margin-right: 50px;
-    font-size: 15px;
-}
-#endereco-local {
-    font-size: 15px;
-    color: #ddd;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-}
-#card-endereco {
-    margin-right: 45px;
-}
-#card-icone {
-    margin-left: 20px;
-}
+
 .excluir {
     background-color: #e50914;
     color: white;
@@ -227,4 +229,21 @@ main {
     border-radius: 5px;
     font-weight: bold;
     margin-top: 8px;
+}
+
+.editar {
+    background-color: #01048d;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+    #card-locais {
+        flex-direction: row; /* volta para linha em telas maiores */
+    }
 }
